@@ -5,84 +5,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf - Halimah Larasati</title>
     <style>
+        /* RESET & BASE */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Georgia, serif; background: #2c1810; min-height: 100vh; }
-        
+        body { 
+            font-family: 'Georgia', serif; 
+            background: #2c1810; 
+            min-height: 100vh; 
+            color: #333;
+        }
+
+        /* HEADER */
         .header {
-            background: linear-gradient(180deg, #3d2215 0%, #2c1810 100%);
+            background: #2c1810;
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #5a3a25;
+            border-bottom: 2px solid #4a2e1f;
         }
         .header-content { flex: 1; }
-        .title { font-size: 2.2rem; color: #f5e6d3; margin-bottom: 0.3rem; }
+        .title { font-size: 2.2rem; color: #f5e6d3; margin-bottom: 0.2rem; font-weight: bold; }
         .subtitle { color: #c9a87c; font-size: 1.1rem; font-style: italic; }
-        .lang-switch { display: flex; gap: 0.5rem; }
+        
+        .lang-switch { display: flex; gap: 0.8rem; }
         .lang-btn {
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            border: 2px solid #c9a87c;
             color: #f5e6d3;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
         }
-        .lang-btn.active { background: #f5e6d3; color: #2c1810; font-weight: bold; }
-        
-        .bookshelf-container { max-width: 900px; margin: 0 auto; padding: 1rem; }
-        .shelf-row { background: #2c1810; padding: 0; margin-bottom: 0; }
-        
+        .lang-btn.active { background: #f5e6d3; color: #2c1810; }
+
+        /* BOOKSHELF CONTAINER */
+        .bookshelf-container { 
+            max-width: 900px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+        }
+        .shelf-row { background: #2c1810; margin-bottom: 1.5rem; }
+
+        /* RAK BUKU (BACKGROUND KREM) */
         .shelf {
-            background: linear-gradient(180deg, #f0e6d8 0%, #f5f0e8 20%, #faf6ee 50%, #f5f0e8 80%, #f0e6d8 100%);
-            padding: 40px 20px 0 20px;
-            min-height: 500px;
+            background: linear-gradient(180deg, #f5f0e8 0%, #faf6ee 50%, #f0e6d8 100%);
+            padding: 40px 30px 0 30px;
+            min-height: 450px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr; /* 2 BUKU PER RAK */
             gap: 2rem;
             justify-items: center;
             align-items: end;
             position: relative;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.05);
         }
-        
+
+        /* PAPAN RAK 3D DI BAWAH (RAPI, GAK KELUAR) */
         .shelf::after {
             content: '';
             position: absolute;
-            bottom: -20px;
+            bottom: 0;
             left: 0;
             right: 0;
             height: 25px;
-            background: linear-gradient(180deg, #d4c4a8 0%, #c9b896 40%, #b8a888 100%);
-            border-radius: 0 0 5px 5px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.4);
+            background: linear-gradient(180deg, #d4c4a8 0%, #c9b896 50%, #b8a888 100%);
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        /* BUKU */
+        .book {
+            width: 200px;
+            height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            margin-bottom: 25px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            border-radius: 2px;
+        }
+        .book:hover { 
+            transform: translateY(-15px); 
+            box-shadow: 10px 15px 25px rgba(0,0,0,0.5); 
+        }
+        .book img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 2px; 
+            display: block;
         }
         
-        .book {
-            width: 220px;
-            height: 340px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            margin-bottom: 20px;
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.4), -3px 0 8px rgba(0,0,0,0.2);
-        }
-        .book:hover { transform: translateY(-20px) scale(1.05); box-shadow: 15px 20px 35px rgba(0,0,0,0.6); z-index: 10; }
-        .book img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 3px; }
+        /* SPINE BUKU */
         .book::before {
             content: '';
             position: absolute;
             top: 0; left: 0;
-            width: 12px; height: 100%;
-            background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.2) 100%);
-            border-radius: 3px 0 0 3px;
+            width: 10px; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.1) 100%);
+            border-radius: 2px 0 0 2px;
             z-index: 2;
-            pointer-events: none;
         }
+
+        /* INFO BUKU */
         .book-info {
             position: absolute;
-            bottom: -60px;
+            bottom: -50px;
             left: 0; right: 0;
             text-align: center;
             color: #2c1810;
@@ -91,63 +122,102 @@
             pointer-events: none;
         }
         .book:hover .book-info { opacity: 1; }
-        .book-info h3 { font-size: 1.1rem; margin-bottom: 0.3rem; font-weight: 700; }
-        .book-info p { font-size: 0.85rem; opacity: 0.8; font-style: italic; }
-        
+        .book-info h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+        .book-info p { font-size: 0.8rem; color: #666; }
+
+        /* TOMBOL LANJUT BACA (KUNING) */
         .continue-btn {
             position: fixed;
             bottom: 30px; right: 30px;
-            width: 70px; height: 70px;
+            width: 65px; height: 65px;
             background: #d4b85c;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 100;
+            transition: transform 0.3s;
         }
-        .continue-btn:hover { transform: scale(1.15); background: #e0c86c; }
-        
-        .reader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f5f0e8; z-index: 1000; display: flex; flex-direction: column; }
+        .continue-btn:hover { transform: scale(1.1); }
+        .continue-btn svg { width: 32px; height: 32px; fill: white; }
+
+        /* READER (HALAMAN BACA) */
+        .reader { 
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0; 
+            background: #faf6ee; 
+            z-index: 1000; 
+            display: flex; 
+            flex-direction: column; 
+        }
         .reader.hidden { display: none; }
+        
         .reader-header {
-            background: linear-gradient(180deg, #8b7355 0%, #6b5340 100%);
-            color: white;
+            background: #2c1810;
+            color: #f5e6d3;
             padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
             gap: 1rem;
-            border-bottom: 3px solid #d4af37;
+            border-bottom: 2px solid #4a2e1f;
         }
-        .back-btn { background: none; border: 2px solid #d4af37; color: #d4af37; font-size: 1.5rem; cursor: pointer; padding: 0.3rem 0.8rem; border-radius: 5px; }
-        .back-btn:hover { background: #d4af37; color: #2c1810; }
-        .reader-header h2 { flex: 1; margin: 0; color: #d4af37; font-size: 1.3rem; }
-        .reader-body { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; }
-        #reader-content { max-width: 650px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9; color: #2c2c2c; }
-        #reader-content h3 { text-align: center; margin: 2rem 0 1.5rem 0; font-size: 1.5rem; }
-        #reader-content p { margin-bottom: 1.3rem; text-align: justify; text-indent: 1.5em; }
-        .reader-controls { background: #e8dcc8; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-top: 3px solid #8b7355; }
-        .page-nav { background: #8b7355; border: 2px solid #d4af37; color: #d4af37; width: 45px; height: 45px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; }
-        .page-nav:hover { background: #d4af37; color: #2c1810; }
-        .page-nav:disabled { opacity: 0.4; cursor: not-allowed; }
-        #page-slider { flex: 1; height: 8px; -webkit-appearance: none; appearance: none; background: linear-gradient(90deg, #c9b896 0%, #8b7355 100%); border-radius: 4px; outline: none; }
-        #page-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #d4af37; cursor: pointer; border: 2px solid #8b6914; }
-        #page-indicator { font-weight: bold; min-width: 70px; text-align: center; color: #2c1810; }
+        .back-btn { 
+            background: none; 
+            border: 2px solid #c9a87c; 
+            color: #f5e6d3; 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            padding: 0.3rem 0.8rem; 
+            border-radius: 5px; 
+        }
+        .reader-header h2 { flex: 1; margin: 0; color: #f5e6d3; font-size: 1.2rem; }
         
+        .reader-body { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 2rem 1.5rem; 
+        }
+        #reader-content { 
+            max-width: 650px; 
+            margin: 0 auto; 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
+            color: #2c2c2c; 
+        }
+        #reader-content h3 { 
+            text-align: center; 
+            margin: 2rem 0 1.5rem 0; 
+            font-size: 1.5rem; 
+            color: #2c1810;
+        }
+        #reader-content p { 
+            margin-bottom: 1.2rem; 
+            text-align: justify; 
+            text-indent: 1.5em; 
+        }
+        #reader-content p:first-of-type { text-indent: 0; }
+
+        /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
-            .shelf { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 25px 10px 0 10px; min-height: 380px; }
-            .book { width: 150px; height: 230px; }
             .header { flex-direction: column; text-align: center; gap: 1rem; padding: 1rem; }
             .title { font-size: 1.8rem; }
-            .subtitle { font-size: 0.9rem; }
-            .continue-btn { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+            .shelf { 
+                grid-template-columns: 1fr 1fr; 
+                gap: 1rem; 
+                padding: 25px 15px 0 15px; 
+                min-height: 350px; 
+            }
+            .book { width: 140px; height: 210px; }
+            .continue-btn { width: 55px; height: 55px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header class="header">
         <div class="header-content">
             <h1 class="title">📚 Bookshelf</h1>
@@ -159,54 +229,161 @@
         </div>
     </header>
 
+    <!-- RAK BUKU -->
     <main class="bookshelf-container">
         <div class="shelf-row"><div class="shelf" id="shelf-1"></div></div>
         <div class="shelf-row"><div class="shelf" id="shelf-2"></div></div>
         <div class="shelf-row"><div class="shelf" id="shelf-3"></div></div>
-        <div class="shelf-row"><div class="shelf" id="shelf-4"></div></div>
     </main>
 
+    <!-- TOMBOL LANJUT BACA -->
     <button id="continue-reading" class="continue-btn" title="Lanjutkan Membaca">
-        <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
-            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
     </button>
 
+    <!-- HALAMAN BACA -->
     <div id="reader" class="reader hidden">
         <div class="reader-header">
-            <button id="close-reader" class="back-btn">←</button>
+            <button id="close-reader" class="back-btn">← Kembali</button>
             <h2 id="reader-title"></h2>
         </div>
         <div class="reader-body" id="reader-body">
             <div id="reader-content"></div>
         </div>
-        <div class="reader-controls">
-            <button id="prev-page" class="page-nav">‹</button>
-            <input type="range" id="page-slider" min="1" max="100" value="1">
-            <span id="page-indicator">1 / 1</span>
-            <button id="next-page" class="page-nav">›</button>
-        </div>
     </div>
 
     <script>
-        const translations = {
-            id: { subtitle: "Novel karya Halimah Larasati", continueReading: "Lanjutkan Membaca" },
-            en: { subtitle: "Novels by Halimah Larasati", continueReading: "Continue Reading" }
-        };
-
+        // DATA NOVEL (Amethyst ID & EN)
         const booksData = [
             {
                 id: 1,
-                title: "Senja di Ujung Jalan",
+                lang: 'id',
+                title: "Amethyst: Kenangan yang Hilang",
                 author: "Halimah Larasati",
                 cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400",
                 synopsis: "Versi Indonesia",
                 chapters: [
-                    { title: "Bab 1: Awal Mula", content: "<p>Langit sore itu berwarna jingga, memantulkan cahaya terakhir matahari yang enggan untuk pergi. Aku duduk di bangku taman, memandangi daun-daun kering yang berjatuhan.</p><p>\"Kau tahu,\" kata suara di sebelahku, \"daun yang jatuh bukan karena angin, tapi karena waktunya memang sudah habis.\"</p><p>Aku menoleh. Seorang pria tua dengan topi fedora usang sedang tersenyum padaku. Itulah hari di mana hidupku berubah selamanya.</p>" }
+                    { 
+                        title: "PROLOG: Seseorang yang Selalu Hilang", 
+                        content: "<p>\"Kalau nanti kita bertemu lagi, apa kamu masih akan mengenaliku?\"</p><p>Langit tidak pernah tahu siapa yang pertama kali mengucapkan kalimat itu. Yang ia tahu, setiap kali suara itu terdengar, dadanya terasa sesak. Dalam mimpinya, seorang perempuan selalu berdiri beberapa langkah darinya. Wajahnya tidak pernah benar-benar asing, tetapi juga tidak pernah bisa ia kenali ketika terbangun. Ada sesuatu pada mata perempuan itu yang membuat Langit merasa seolah-olah ia sedang menatap seseorang yang pernah menjadi seluruh dunianya.</p><p>Namun, ia tidak ingat kapan mereka bertemu. Tidak ingat di mana mereka pertama kali berbicara. Bahkan namanya pun selalu menghilang dari pikirannya begitu ia membuka mata. Anehnya, perasaan kehilangan itu tetap tinggal. Seolah-olah ada bagian dari hidupnya yang direnggut seseorang, sementara dirinya sendiri tidak pernah diberi kesempatan untuk mengetahui apa yang telah hilang.</p><p>Malam itu, perempuan tersebut kembali muncul. Langit berdiri di hadapannya, ingin bertanya siapa dirinya, mengapa ia selalu datang, dan kenapa setiap perpisahan dalam mimpi itu terasa jauh lebih menyakitkan daripada kehilangan seseorang di dunia nyata. Tetapi sebelum satu pertanyaan pun berhasil keluar dari bibirnya, perempuan itu tersenyum tipis. Senyum yang begitu sedih hingga Langit berharap ia tidak pernah melihatnya.</p><p>\"Aku takut,\" bisik perempuan itu. \"Takut apa?\" Perempuan itu menunduk. Jemarinya meremas ujung pakaian yang dikenakannya. \"Kalau suatu hari nanti kamu lupa semuanya.\" Langit menggeleng, meskipun ia tidak mengerti apa yang sedang dibicarakan perempuan itu. \"Aku bahkan nggak tahu siapa kamu.\" Senyum perempuan itu perlahan menghilang. Untuk sesaat, ia terlihat seperti seseorang yang baru saja mendengar sesuatu yang sudah lama ditakutinya. Lalu ia mengangkat wajah. \"Kalau begitu, kenapa kamu menangis setiap kali aku pergi?\"</p><p>Langit terdiam. Ia ingin menjawab. Ingin mengatakan bahwa ia tidak tahu, bahwa ia sendiri lelah terbangun dengan pipi basah dan perasaan hancur yang tidak memiliki alasan. Namun, ketika ia mencoba meraih tangan perempuan itu, jarak di antara mereka justru semakin jauh. \"Sebentar!\" serunya. Perempuan itu mulai memudar. \"Tunggu! Aku belum tahu namamu!\" Untuk pertama kalinya, perempuan itu menangis. Dan tepat sebelum sosoknya menghilang sepenuhnya, bibirnya bergerak membentuk sebuah nama. Sebuah nama yang tidak berhasil didengar Langit. Sebuah nama yang seharusnya tidak ia lupakan.</p><p>Langit terbangun dengan napas tersengal-sengal. Kamar itu gelap. Jam di samping tempat tidurnya terus berdetak, seolah-olah tidak ada sesuatu pun yang baru saja terjadi. Ia mengusap wajahnya. Basah. Lagi. Untuk beberapa saat, Langit hanya duduk diam, berusaha mengingat suara perempuan itu. Ia hampir berhasil. Ia bisa merasakan namanya berada di ujung ingatan, begitu dekat hingga ia yakin hanya perlu beberapa detik lagi untuk menemukannya. Namun, nama itu lenyap. Seperti selalu.</p><p>Langit menjatuhkan tubuhnya kembali ke bantal dan menatap langit-langit kamar. \"Siapa kamu sebenarnya?\" bisiknya. Tidak ada jawaban. Hanya suara jam yang terus berdetak. Dan jauh di dalam dirinya, sebuah perasaan aneh berbisik bahwa suatu hari nanti, ia akan menemukan perempuan itu. Bukan di dalam mimpi. Melainkan di suatu tempat yang seharusnya tidak pernah ia datangi. Tempat di mana waktu telah membawa mereka kembali, tetapi tidak memberikan mereka kenangan yang sama. Langit belum tahu bahwa hari itu akan datang. Ia juga belum tahu bahwa ketika akhirnya perempuan itu berdiri tepat di hadapannya, ia akan mendengar nama yang selama ini berusaha diingatnya. Mima.</p>" 
+                    },
+                    { 
+                        title: "Bab 1: Kalau Ini Cuma Mimpi", 
+                        content: "<p>Langit terbangun dengan napas memburu. Lagi. Mimpi itu lagi. Wajah perempuan yang selalu datang dalam tidurnya. Suaranya. Matanya. Bahkan cara perempuan itu tersenyum kepadanya, seolah-olah mereka pernah berbagi begitu banyak hal yang tak sanggup Langit ingat ketika terbangun. Dan seperti malam-malam sebelumnya, ada air mata di pipinya. Sial. Langit mengusap wajahnya kasar. Laki-laki itu bahkan sudah tidak ingat kapan terakhir kali ia menangis sesedih ini hanya karena seseorang yang, menurut akal sehatnya, tidak pernah ia kenal.</p><p>\"Lo siapa, sih?\" bisiknya lirih ke ruangan kosong. Kenapa perempuan itu selalu terlihat begitu sedih setiap kali mimpi itu berakhir? Kenapa, setiap kali ia mencoba meraih tangannya, perempuan itu selalu menghilang? Dan kenapa rasanya seperti ia pernah kehilangan perempuan itu berkali-kali? Langit memejamkan mata, mencoba mengatur napas. Kalau ini cuma mimpi, kenapa rasanya seperti kenangan?</p><p>\"AAAAA—!\" Langit nyaris melompat dari tempatnya berdiri. Di hadapannya, seorang perempuan menjerit sambil mundur beberapa langkah. \"ASTAGFIRULLAH! SIAPA LO?!\" Langit membeku. Perempuan itu mengenakan pakaian yang sama persis seperti dalam mimpinya. Wajah yang sama. Mata yang sama. Bahkan tahi lalat kecil di dekat sudut bibirnya—yang selama ini selalu muncul dalam mimpinya—ada di sana. Langit menatapnya tanpa berkedip. Nggak mungkin. Nggak mungkin, anjir.</p><p>Perempuan itu menoleh ke kanan dan kiri dengan panik. Tempat mereka berdiri bukan lagi jalanan yang tadi ia lewati. Bangunan-bangunannya tampak asing, kendaraan yang berlalu-lalang berbeda dari yang biasa ia lihat, dan orang-orang di sekitar mereka mengenakan pakaian dari zaman yang seharusnya cuma ada di buku sejarah. \"Ini di mana?\" Perempuan itu bertanya dengan suara gemetar. \"Tadi gue masih di—\" Ia berhenti sendiri. Kemudian menatap Langit lagi. \"Lo tahu ini di mana?\" Langit tidak menjawab. Ia terlalu sibuk meyakinkan dirinya sendiri bahwa ia tidak sedang bermimpi.</p><p>Perempuan itu melambaikan tangan di depan wajahnya. \"HEH. LO DENGER GUE NGGAK?\" Langit tersentak. \"Iya.\" \"Iya apaan? Ini tempat apa?\" \"Gue nggak tahu.\" \"Terus kenapa lo diem aja?!\" Langit membuka mulut, tetapi tidak ada satu kata pun yang keluar. Perempuan itu mengembuskan napas frustrasi. \"Oke. Oke, gue mungkin lagi mimpi. Iya, pasti mimpi.\" Ia mencubit pipinya sendiri. \"Aduh!\" Kemudian mencubit pipi satunya. \"Aduh, ANJIR!\" Langit hampir tertawa. Hampir. Karena perempuan itu sedang berdiri tepat di hadapannya. Hidup. Nyata. Bisa bicara. Bisa marah. Dan Langit tidak tahu kenapa dadanya terasa begitu sesak sampai ia kesulitan bernapas.</p><p>Perempuan itu akhirnya memperhatikan wajahnya. \"Lo kenapa?\" Langit menggeleng cepat. \"Nggak.\" \"Terus kenapa muka lo begitu?\" \"Begitu gimana?\" \"Kayak habis lihat hantu.\" Langit menelan ludah. Bukan hantu. Kalau perempuan itu hantu, setidaknya Langit bisa menyalahkan pikirannya sendiri. Masalahnya, perempuan ini adalah seseorang yang selama berbulan-bulan menghancurkan tidurnya tanpa pernah benar-benar hadir dalam hidupnya. Seseorang yang membuatnya terbangun dengan mata basah. Seseorang yang suaranya bisa ia ingat bahkan ketika ia tidak mampu mengingat wajahnya sendiri dengan jelas setelah bangun tidur. Dan sekarang perempuan itu berdiri di depannya sambil memasang ekspresi curiga. Seolah-olah mereka adalah dua orang asing.</p><p>Langit menatap wajah perempuan itu sekali lagi. Bibirnya terbuka sedikit, tetapi suaranya tertahan di tenggorokan. Nama itu. Nama yang berkali-kali muncul dalam mimpinya. Nama yang pernah ia bisikkan sambil menangis ketika perempuan itu menghilang dari hadapannya. \"Mima...\" Perempuan itu langsung terdiam. Keningnya berkerut. \"...Hah?\" Langit sendiri baru menyadari bahwa ia baru saja menyebut nama itu dengan suara keras. Mima menunjuk dirinya sendiri. \"Lo manggil gue?\" Langit tidak menjawab. Matanya masih terpaku pada wajah perempuan itu. Mima melangkah sedikit mendekat, kali ini dengan ekspresi yang jauh lebih curiga. \"Eh, bentar.\" Ia memperhatikan Langit dari atas sampai bawah. \"Kok lo tahu nama gue?\"</p><p>Langit membeku. Mima menggeleng pelan, seolah-olah mencoba mencari kemungkinan yang masuk akal. \"Serius, deh. Kita pernah ketemu?\" Langit tidak mampu menjawab. Karena tiba-tiba, sebuah potongan mimpi melintas begitu jelas di kepalanya. Perempuan itu sedang menangis. Tangannya menggenggam tangan Langit erat-erat. Lalu perempuan itu berkata, dengan suara yang nyaris tidak terdengar: Kalau suatu hari nanti kamu lupa sama aku, aku harap setidaknya kamu pernah bahagia waktu mengenalku.</p><p>Langit terhuyung mundur. Dadanya sakit. Sakit sekali. \"Eh, lo kenapa?!\" Mima buru-buru mendekat. Langit menunduk, kedua tangannya mengepal. Jangan. Jangan menangis sekarang. Jangan di depan dia. Tapi air matanya tetap jatuh. Satu tetes. Lalu satu lagi. Sampai akhirnya ia menutupi wajahnya dengan kedua tangan, bahunya bergetar hebat. Mima membeku. \"Eh...\" Ia melihat ke kanan dan kiri, kebingungan harus berbuat apa. \"Lo sakit?\" Langit menggeleng, tetapi tangisnya justru semakin pecah. \"Eh, serius, deh. Gue jadi takut.\" Langit tertawa kecil di sela tangisnya. Tawa yang terdengar menyedihkan. \"Maaf.\" \"Maaf kenapa?! Gue bahkan nggak tahu lo siapa!\"</p><p>Kalimat itu membuat Langit terdiam. Lama sekali. Lalu ia mengangkat wajahnya. Matanya merah. Hidungnya memerah. Air mata masih membasahi pipinya. Dan ia menatap Mima seperti seseorang yang baru saja menemukan sesuatu yang sudah lama ia cari, hanya untuk menyadari bahwa sesuatu itu tidak pernah mencarinya. \"Iya,\" bisiknya. \"Lo nggak tahu gue siapa.\" Mima semakin bingung. \"Ya emang. Kita baru ketemu, kan?\" Langit mengangguk pelan. \"Iya.\" Ia mengusap air matanya, mencoba tersenyum. \"Baru ketemu.\"</p><p>Mima menatapnya beberapa detik, lalu menghela napas panjang. \"Oke. Denger, ya. Gue nggak tahu lo kenapa nangis kayak habis ditinggal nikah, tapi sekarang kita punya masalah yang lebih besar.\" Langit menatapnya. \"Kita kayaknya terjebak di masa lalu.\" Mima menunjuk jalanan di belakang mereka. \"Dan gue nggak tahu cara pulang.\" Ia berhenti sebentar, lalu menatap Langit lagi. \"Jadi, untuk sementara, kita harus kerja sama.\" Langit mengangguk. \"Tentu.\" \"Dan jangan nangis lagi, please. Gue panik kalau ada cowok nangis.\" Langit mengeluarkan suara kecil yang nyaris menyerupai tawa. \"Iya.\" Mima mengulurkan tangannya. \"Kenalan. Gue Mima.\" Langit menatap tangan itu. Tangan yang berkali-kali berusaha ia genggam dalam mimpinya. Tangan yang selalu terlepas sebelum ia sempat bertanya kenapa perempuan itu harus pergi. Dengan hati-hati, Langit menyambut uluran tangannya. \"Langit.\" Mima tersenyum tipis. \"Oke, Langit. Kita cari cara buat pulang, ya.\" Langit menggenggam tangannya sebentar sebelum melepaskannya. \"Iya.\"</p><p>Mima mulai berjalan di sampingnya, masih sibuk mengomel tentang kemungkinan mereka sedang mengalami halusinasi massal. Sementara Langit hanya bisa menatapnya diam-diam. Ia tidak tahu bagaimana semua ini bisa terjadi. Ia tidak tahu mengapa Mima ada di sana. Ia bahkan tidak tahu apakah mimpi-mimpinya selama ini benar-benar memiliki arti. Tetapi untuk pertama kalinya, perempuan yang selama ini hanya bisa ia temui ketika tidur berjalan tepat di sampingnya. Dan Langit, yang selama berbulan-bulan menangisi seseorang yang bahkan tidak dikenalnya, akhirnya memiliki kesempatan untuk mendengar suaranya tanpa harus terbangun setelahnya. Sayangnya, ada satu hal yang belum ia ketahui. Mima tidak mengingatnya. Bukan karena ia lupa. Melainkan karena, dalam kehidupan yang belum mereka jalani, mereka memang belum pernah saling mengenal. Dan Langit belum tahu apakah pertemuan ini adalah kesempatan kedua... Atau justru awal dari kehilangan yang sama.</p>" 
+                    }
                 ]
             },
             {
                 id: 2,
+                lang: 'en',
+                title: "Amethyst: The Memories We Lost",
+                author: "Halimah Larasati",
+                cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
+                synopsis: "English Version",
+                chapters: [
+                    { 
+                        title: "PROLOGUE: The Girl Who Always Disappeared", 
+                        content: "<p>\"If we ever meet again, will you still know who I am?\"</p><p>Langit never knew who had spoken those words first. All he knew was that whenever he heard that voice, his chest tightened. In his dreams, a young woman always stood a few steps away from him. Her face never felt entirely unfamiliar, yet he could never recognize her once he woke. There was something in her eyes that made him feel as though he were looking at someone who had once been his entire world. But he couldn't remember when they had met. He couldn't remember where they had first spoken. He couldn't even hold on to her name once he opened his eyes. Strangely, the feeling of loss remained. As though a part of his life had been taken from him, while he had never been given the chance to discover what was missing.</p><p>That night, the woman appeared again. Langit stood before her, wanting to ask who she was, why she kept coming back, and why every goodbye in those dreams hurt more than losing someone in the waking world. But before he could ask a single question, the woman offered him a faint smile. A smile so unbearably sad that Langit wished he had never seen it. \"I'm scared,\" she whispered. \"Of what?\" She lowered her gaze, her fingers tightening around the fabric of her clothes. \"That one day, you'll forget everything.\" Langit shook his head, even though he had no idea what she was talking about. \"I don't even know who you are.\" Her smile slowly disappeared. For a moment, she looked like someone who had just heard the very thing she had spent so long dreading. Then she lifted her face. \"Then why do you cry every time I leave?\"</p><p>Langit fell silent. He wanted to answer. He wanted to tell her that he didn't know, that he was tired of waking up with wet cheeks and a broken feeling he couldn't explain. But when he reached for her hand, the distance between them only grew. \"Wait!\" he shouted. The woman began to fade. \"Wait! I don't even know your name!\" For the first time, she cried. And just before her figure disappeared completely, her lips formed a name. A name Langit couldn't hear. A name he should never have forgotten.</p><p>Langit woke with a ragged gasp. His room was dark. The clock beside his bed kept ticking, as though nothing had happened. He wiped his face. Wet. Again. For a while, he sat in silence, trying to remember the woman's voice. He almost had it. He could feel her name at the edge of his memory, so close that he was certain he needed only a few more seconds to find it. But the name vanished. As it always did. Langit sank back into his pillow and stared at the ceiling. \"Who are you, really?\" he whispered. There was no answer. Only the steady ticking of the clock. And somewhere deep inside him, a strange feeling whispered that one day, he would find her. Not in a dream. But somewhere he was never supposed to be. A place where time had brought them back together, but had not given them the same memories. Langit didn't know that day was coming. He also didn't know that when the woman finally stood before him, he would hear the name he had spent so long trying to remember. Mima.</p>" 
+                    },
+                    { 
+                        title: "Chapter 1: If This Is Just a Dream", 
+                        content: "<p>Langit woke up with his breath hitching. Again. That dream again. The face of the woman who always came to him in his sleep. Her voice. Her eyes. Even the way she smiled at him, as if they had shared so many things that Langit couldn't remember when he woke up. And like the nights before, there were tears on his cheeks. Damn it. Langit wiped his face roughly. The man couldn't even remember the last time he cried this hard just because of someone who, according to his common sense, he had never met.</p><p>\"Who are you, anyway?\" he whispered softly to the empty room. Why did that woman always look so sad every time the dream ended? Why, every time he tried to reach for her hand, did she always disappear? And why did it feel like he had lost that woman over and over again? Langit closed his eyes, trying to steady his breath. If this was just a dream, why did it feel like a memory?</p><p>\"AAAAA—!\" Langit nearly jumped from where he was standing. In front of him, a woman screamed while stepping back a few paces. \"OH MY GOD! WHO ARE YOU?!\" Langit froze. The woman was wearing the exact same clothes as in his dream. The same face. The same eyes. Even the small mole near the corner of her lips—the one that always appeared in his dreams—was right there. Langit stared at her without blinking. Impossible. No way, damn it.</p><p>The woman looked left and right in panic. The place they were standing was no longer the street he had just walked on. The buildings looked unfamiliar, the passing vehicles were different from what he usually saw, and the people around them were wearing clothes from an era that should only exist in history books. \"Where is this?\" The woman asked with a trembling voice. \"I was just at—\" She stopped herself. Then she looked at Langit again. \"Do you know where this is?\" Langit didn't answer. He was too busy convincing himself that he wasn't dreaming.</p><p>The woman waved her hand in front of his face. \"HEY. ARE YOU LISTENING TO ME OR NOT?\" Langit flinched. \"Yes.\" \"Yes what? What is this place?\" \"I don't know.\" \"Then why are you just standing there?!\" Langit opened his mouth, but not a single word came out. The woman let out a frustrated breath. \"Okay. Okay, I might be dreaming. Yeah, definitely a dream.\" She pinched her own cheek. \"Ouch!\" Then she pinched the other cheek. \"Ouch, DAMN IT!\" Langit almost laughed. Almost. Because the woman was standing right in front of him. Alive. Real. Able to talk. Able to get angry. And Langit didn't know why his chest felt so tight that he had trouble breathing.</p><p>The woman finally noticed his face. \"What's wrong with you?\" Langit shook his head quickly. \"Nothing.\" \"Then why does your face look like that?\" \"Like what?\" \"Like you just saw a ghost.\" Langit swallowed hard. Not a ghost. If the woman was a ghost, at least Langit could blame his own mind. The problem was, this woman was someone who had been ruining his sleep for months without ever truly being present in his life. Someone who made him wake up with wet eyes. Someone whose voice he could remember even when he couldn't clearly remember her own face after waking up. And now the woman was standing in front of him with a suspicious expression. As if they were two strangers.</p><p>Langit looked at the woman's face once more. His lips parted slightly, but his voice was stuck in his throat. That name. The name that appeared over and over in his dreams. The name he had whispered while crying when the woman disappeared from his sight. \"Mima...\" The woman immediately went silent. Her forehead wrinkled. \"...Huh?\" Langit himself just realized that he had just said that name out loud. Mima pointed at herself. \"Are you calling me?\" Langit didn't answer. His eyes were still fixed on the woman's face. Mima took a small step closer, this time with a much more suspicious expression. \"Hey, wait.\" She looked Langit up and down. \"How do you know my name?\"</p><p>Langit froze. Mima shook her head slowly, as if trying to find a reasonable possibility. \"Seriously, though. Have we met before?\" Langit couldn't answer. Because suddenly, a fragment of a dream flashed so clearly in his head. The woman was crying. Her hand was gripping Langit's hand tightly. Then the woman said, in a barely audible voice: If one day you forget me, I hope at least you were happy when you knew me.</p><p>Langit stumbled back. His chest hurt. It hurt so much. \"Hey, what's wrong?!\" Mima hurriedly approached. Langit looked down, his hands clenching into fists. Don't. Don't cry now. Don't in front of her. But his tears still fell. One drop. Then another. Until finally he covered his face with both hands, his shoulders shaking violently. Mima froze. \"Hey...\" She looked left and right, confused about what to do. \"Are you sick?\" Langit shook his head, but his crying only broke out more. \"Hey, seriously. I'm getting scared.\" Langit let out a small laugh amidst his tears. A laugh that sounded pathetic. \"Sorry.\" \"Sorry for what?! I don't even know who you are!\"</p><p>Those words made Langit silent. For a long time. Then he lifted his face. His eyes were red. His nose was red. Tears still wet his cheeks. And he looked at Mima like someone who had just found something he had been looking for for a long time, only to realize that something never looked for him. \"Yeah,\" he whispered. \"You don't know who I am.\" Mima was even more confused. \"Well yeah. We just met, right?\" Langit nodded slowly. \"Yeah.\" He wiped his tears, trying to smile. \"Just met.\"</p><p>Mima looked at him for a few seconds, then let out a long sigh. \"Okay. Listen. I don't know why you're crying like you just got left at the altar, but right now we have a bigger problem.\" Langit looked at her. \"I think we're trapped in the past.\" Mima pointed to the street behind them. \"And I don't know how to get home.\" She paused for a moment, then looked at Langit again. \"So, for now, we have to work together.\" Langit nodded. \"Sure.\" \"And don't cry again, please. I panic when guys cry.\" Langit let out a small sound that almost resembled a laugh. \"Okay.\" Mima extended her hand. \"Let's introduce ourselves. I'm Mima.\" Langit looked at that hand. The hand he had tried to hold over and over in his dreams. The hand that always slipped away before he could ask why the woman had to leave. Carefully, Langit took her hand. \"Langit.\" Mima smiled faintly. \"Okay, Langit. Let's find a way to get home, yeah.\" Langit held her hand for a moment before letting go. \"Yeah.\"</p><p>Mima started walking beside him, still rambling about the possibility of them experiencing mass hallucinations. Meanwhile, Langit could only stare at her quietly. He didn't know how all this could happen. He didn't know why Mima was there. He didn't even know if his dreams all this time really had any meaning. But for the first time, the woman he could only meet in his sleep was walking right beside him. And Langit, who had been mourning someone he didn't even know for months, finally had the chance to hear her voice without having to wake up afterward. Unfortunately, there was one thing he didn't know yet. Mima didn't remember him. Not because she forgot. But because, in the life they hadn't lived yet, they had indeed never known each other. And Langit didn't know yet whether this meeting was a second chance... Or just the beginning of the same loss.</p>" 
+                    }
+                ]
+            }
+        ];
+
+        // LOGIC
+        let currentLang = 'id';
+        let currentBook = null;
+
+        function renderBooks() {
+            const shelves = [
+                document.getElementById('shelf-1'),
+                document.getElementById('shelf-2'),
+                document.getElementById('shelf-3')
+            ];
+            shelves.forEach(s => s.innerHTML = '');
+
+            // Filter buku berdasarkan bahasa yang aktif (ID/EN)
+            const filteredBooks = booksData.filter(b => b.lang === currentLang);
+            
+            filteredBooks.forEach((book, index) => {
+                const shelfIndex = Math.floor(index / 2); // 2 buku per rak
+                if (shelfIndex < shelves.length) {
+                    const bookEl = document.createElement('div');
+                    bookEl.className = 'book';
+                    bookEl.innerHTML = `
+                        <img src="${book.cover}" alt="${book.title}">
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <p>${book.synopsis}</p>
+                        </div>
+                    `;
+                    bookEl.addEventListener('click', () => openBook(book));
+                    shelves[shelfIndex].appendChild(bookEl);
+                }
+            });
+        }
+
+        function openBook(book) {
+            currentBook = book;
+            document.getElementById('reader-title').textContent = book.title;
+            
+            let fullContent = '';
+            book.chapters.forEach(chapter => {
+                fullContent += `<h3>${chapter.title}</h3>${chapter.content}`;
+            });
+            
+            document.getElementById('reader-content').innerHTML = fullContent;
+            document.getElementById('reader-body').scrollTop = 0;
+            document.getElementById('reader').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('close-reader').addEventListener('click', () => {
+            document.getElementById('reader').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('lang-id').addEventListener('click', () => {
+            currentLang = 'id';
+            document.getElementById('subtitle-text').textContent = 'Novel karya Halimah Larasati';
+            document.getElementById('lang-id').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+            renderBooks();
+        });
+
+        document.getElementById('lang-en').addEventListener('click', () => {
+            currentLang = 'en';
+            document.getElementById('subtitle-text').textContent = 'Novels by Halimah Larasati';
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-id').classList.remove('active');
+            renderBooks();
+        });
+
+        document.getElementById('continue-reading').addEventListener('click', () => {
+            const saved = localStorage.getItem('lastReadBook');
+            if (saved) {
+                const book = booksData.find(b => b.id === parseInt(saved));
+                if (book) openBook(book);
+            } else {
+                alert('Belum ada buku yang dibaca! / No book read yet!');
+            }
+        });
+
+        // Simpan progress sederhana
+        const origOpen = openBook;
+        openBook = function(book) {
+            localStorage.setItem('lastReadBook', book.id);
+            origOpen(book);
+        }
+
+        // Init
+        renderBooks();
+    </script>
+</body>
+</html>d: 2,
                 title: "Twilight at Journey's End",
                 author: "Halimah Larasati",
                 cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
