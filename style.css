@@ -7,37 +7,29 @@
 body {
     font-family: 'Georgia', serif;
     background: #1a0f0a;
-    background-image: 
-        radial-gradient(ellipse at center, #2a1810 0%, #0f0805 100%);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* ===== HEADER ===== */
 .header {
-    background: linear-gradient(180deg, #3d2215 0%, #2c1810 50%, #1a0f0a 100%);
+    background: linear-gradient(180deg, #3d2215 0%, #2c1810 100%);
     padding: 1.5rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 4px solid #5a3a25;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    border-bottom: 3px solid #8b6540;
 }
 
 .header-content { flex: 1; }
 
 .title {
     font-family: 'Cinzel', serif;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: #d4af37;
-    text-shadow: 
-        2px 2px 4px rgba(0, 0, 0, 0.8),
-        0 0 20px rgba(212, 175, 55, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     margin-bottom: 0.3rem;
-    letter-spacing: 2px;
 }
 
 .subtitle {
@@ -61,245 +53,99 @@ body {
     font-family: 'Cinzel', serif;
 }
 
-.lang-btn:hover { 
-    background: rgba(212, 175, 55, 0.3);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-}
+.lang-btn:hover { background: rgba(212, 175, 55, 0.3); }
 
 .lang-btn.active {
     background: #d4af37;
     color: #2c1810;
     font-weight: bold;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
 }
 
-/* ===== RAK BUKU ANTIK ===== */
+/* ===== RAK BUKU ===== */
 .bookshelf-container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 2rem auto;
-    padding: 0 2rem;
-    display: flex;
-    gap: 0;
-    position: relative;
+    padding: 0 1rem;
 }
 
-/* Tiang Pilaster (Kiri-Kanan) */
-.pilaster {
-    width: 60px;
-    background: 
-        linear-gradient(90deg, 
-            #4a2e1f 0%, 
-            #6b4c35 20%, 
-            #8b6540 50%, 
-            #6b4c35 80%, 
-            #4a2e1f 100%);
-    position: relative;
-    box-shadow: 
-        inset 0 0 20px rgba(0, 0, 0, 0.5),
-        5px 0 15px rgba(0, 0, 0, 0.6);
+.shelf-row {
+    margin-bottom: 0;
 }
 
-.pilaster::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 2px;
-    background: linear-gradient(180deg, 
-        transparent 0%, 
-        rgba(212, 175, 55, 0.3) 20%, 
-        rgba(212, 175, 55, 0.3) 80%, 
-        transparent 100%);
-    transform: translateX(-50%);
-}
-
-.pilaster::after {
-    content: '';
-    position: absolute;
-    top: 10%;
-    bottom: 10%;
-    left: 50%;
-    width: 20px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 100'%3E%3Cpath d='M10 10 Q5 30, 10 50 Q15 70, 10 90' fill='none' stroke='%23d4af37' stroke-width='1' opacity='0.4'/%3E%3C/svg%3E");
-    transform: translateX(-50%);
-    opacity: 0.6;
-}
-
-.pilaster.left {
-    border-radius: 10px 0 0 10px;
-    margin-right: -5px;
-    z-index: 2;
-}
-
-.pilaster.right {
-    border-radius: 0 10px 10px 0;
-    margin-left: -5px;
-    z-index: 2;
-}
-
-/* Unit Rak Utama */
-.shelf-unit {
-    flex: 1;
+/* Rak dengan ornamen antik */
+.shelf {
+    /* Background kayu gelap */
     background: 
         linear-gradient(180deg, 
             #2c1810 0%, 
-            #1a0f0a 100%);
-    position: relative;
-    box-shadow: 
-        inset 0 0 50px rgba(0, 0, 0, 0.8),
-        0 10px 40px rgba(0, 0, 0, 0.8);
-}
-
-/* Crown Molding (Ornamen Atas) */
-.crown-molding {
-    background: linear-gradient(180deg, 
-        #6b4c35 0%, 
-        #8b6540 30%, 
-        #a67c52 50%, 
-        #8b6540 70%, 
-        #6b4c35 100%);
-    padding: 15px 20px;
-    position: relative;
-    box-shadow: 
-        0 5px 15px rgba(0, 0, 0, 0.6),
-        inset 0 2px 5px rgba(255, 255, 255, 0.2);
-}
-
-.crown-molding::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, 
-        #4a2e1f 0%, 
-        #d4af37 20%, 
-        #d4af37 80%, 
-        #4a2e1f 100%);
-    opacity: 0.6;
-}
-
-.molding-ornament {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.ornament-svg {
-    width: 100%;
-    height: 50px;
-    color: #d4af37;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-/* Base Molding (Ornamen Bawah) */
-.base-molding {
-    background: linear-gradient(180deg, 
-        #6b4c35 0%, 
-        #8b6540 30%, 
-        #a67c52 50%, 
-        #8b6540 70%, 
-        #6b4c35 100%);
-    padding: 10px 20px 15px 20px;
-    position: relative;
-    box-shadow: 
-        0 -5px 15px rgba(0, 0, 0, 0.6),
-        inset 0 -2px 5px rgba(255, 255, 255, 0.2);
-}
-
-.base-molding::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, 
-        #4a2e1f 0%, 
-        #d4af37 20%, 
-        #d4af37 80%, 
-        #4a2e1f 100%);
-    opacity: 0.6;
-}
-
-/* Shelf Row */
-.shelf-row {
-    position: relative;
-    padding: 0 30px;
-}
-
-/* Rak Individual */
-.shelf {
-    background: 
-        linear-gradient(180deg, 
-            #1a0f0a 0%, 
-            #2c1810 20%, 
+            #1a0f0a 5%, 
+            #2c1810 10%, 
             #3d2215 50%, 
-            #2c1810 80%, 
-            #1a0f0a 100%);
-    padding: 30px 20px 0 20px;
-    min-height: 450px;
+            #2c1810 90%, 
+            #1a0f0a 95%, 
+            #2c1810 100%);
+    
+    /* Border emas antik */
+    border: 3px solid #8b6540;
+    border-top: 8px solid #6b4c35;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    
+    /* Shadow dalam */
+    box-shadow: 
+        inset 0 0 40px rgba(0, 0, 0, 0.8),
+        inset 0 10px 20px rgba(0, 0, 0, 0.6),
+        0 10px 30px rgba(0, 0, 0, 0.7);
+    
+    /* Grid 3 buku */
+    padding: 40px 30px 0 30px;
+    min-height: 480px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     justify-items: center;
     align-items: end;
     position: relative;
-    box-shadow: 
-        inset 0 10px 30px rgba(0, 0, 0, 0.8),
-        inset 0 -5px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Papan Rak (tebal, 3D) */
+/* Ornamen sudut rak (CSS pure) */
+.shelf::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    height: 30px;
+    background: 
+        linear-gradient(90deg, 
+            #d4af37 0%, 
+            transparent 10%, 
+            transparent 90%, 
+            #d4af37 100%);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Papan rak di bawah (tebal, 3D) */
 .shelf::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: -20px;
+    left: -5px;
+    right: -5px;
     height: 25px;
     background: linear-gradient(180deg, 
-        #8b6540 0%, 
-        #a67c52 20%, 
-        #6b4c35 80%, 
+        #a67c52 0%, 
+        #8b6540 30%, 
+        #6b4c35 70%, 
         #4a2e1f 100%);
+    border-radius: 0 0 5px 5px;
     box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.7),
+        0 8px 20px rgba(0, 0, 0, 0.8),
         inset 0 2px 3px rgba(255, 255, 255, 0.3),
         inset 0 -2px 3px rgba(0, 0, 0, 0.5);
-}
-
-/* Corbel (Penyangga Dekoratif) */
-.corbel-left, .corbel-right {
-    position: absolute;
-    bottom: 25px;
-    width: 40px;
-    height: 60px;
-    color: #d4af37;
-    opacity: 0.7;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.8));
-}
-
-.corbel-left { left: 5px; }
-.corbel-right { right: 5px; }
-
-.corbel-left svg, .corbel-right svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* Divider Antar Rak */
-.shelf-divider {
-    height: 15px;
-    background: linear-gradient(180deg, 
-        #4a2e1f 0%, 
-        #6b4c35 50%, 
-        #4a2e1f 100%);
-    box-shadow: 
-        0 3px 10px rgba(0, 0, 0, 0.6),
-        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    border: 2px solid #4a2e1f;
+    border-top: none;
 }
 
 /* ===== BUKU ===== */
@@ -307,22 +153,20 @@ body {
     width: 200px;
     height: 320px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.4s ease;
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     box-shadow: 
         5px 5px 15px rgba(0, 0, 0, 0.7),
-        -2px 0 5px rgba(0, 0, 0, 0.4),
-        inset -3px 0 8px rgba(0, 0, 0, 0.3);
+        -2px 0 5px rgba(0, 0, 0, 0.4);
     border-radius: 3px;
 }
 
 .book:hover {
-    transform: translateY(-25px) scale(1.05);
+    transform: translateY(-20px) scale(1.05);
     box-shadow: 
-        10px 20px 40px rgba(0, 0, 0, 0.9),
-        -3px 0 8px rgba(0, 0, 0, 0.5),
-        0 0 30px rgba(212, 175, 55, 0.3);
+        10px 20px 35px rgba(0, 0, 0, 0.9),
+        0 0 25px rgba(212, 175, 55, 0.4);
     z-index: 10;
 }
 
@@ -334,28 +178,27 @@ body {
     display: block;
 }
 
-/* Spine Buku (Tulang Buku) */
+/* Spine buku */
 .book::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 12px;
+    width: 10px;
     height: 100%;
     background: linear-gradient(90deg, 
-        rgba(255,255,255,0.3) 0%, 
-        rgba(255,255,255,0.1) 30%, 
-        rgba(0,0,0,0.2) 70%, 
-        rgba(0,0,0,0.4) 100%);
+        rgba(255,255,255,0.25) 0%, 
+        rgba(255,255,255,0.05) 50%, 
+        rgba(0,0,0,0.2) 100%);
     border-radius: 3px 0 0 3px;
     z-index: 2;
     pointer-events: none;
 }
 
-/* Info Buku */
+/* Info buku */
 .book-info {
     position: absolute;
-    bottom: -60px;
+    bottom: -55px;
     left: 0;
     right: 0;
     text-align: center;
@@ -370,9 +213,8 @@ body {
 
 .book-info h3 {
     font-family: 'Cinzel', serif;
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 0.3rem;
-    letter-spacing: 1px;
 }
 
 .book-info p {
@@ -394,7 +236,7 @@ body {
     cursor: pointer;
     box-shadow: 
         0 5px 20px rgba(0, 0, 0, 0.6),
-        0 0 30px rgba(212, 175, 55, 0.4);
+        0 0 25px rgba(212, 175, 55, 0.5);
     transition: all 0.3s;
     display: flex;
     align-items: center;
@@ -406,7 +248,7 @@ body {
     transform: scale(1.15);
     box-shadow: 
         0 8px 30px rgba(0, 0, 0, 0.7),
-        0 0 40px rgba(212, 175, 55, 0.6);
+        0 0 35px rgba(212, 175, 55, 0.7);
 }
 
 /* ===== READER ===== */
@@ -459,6 +301,9 @@ body {
     flex: 1;
     color: #d4af37;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .reader-body {
@@ -466,10 +311,6 @@ body {
     overflow-y: auto;
     padding: 2rem 1.5rem;
     background: #faf6ee;
-    background-image: 
-        linear-gradient(180deg, 
-            rgba(212, 175, 55, 0.05) 0%, 
-            transparent 100%);
 }
 
 #reader-content {
@@ -543,7 +384,6 @@ body {
 .page-nav:hover {
     background: #d4af37;
     color: #2c1810;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 .page-nav:disabled {
@@ -598,23 +438,20 @@ body {
     
     .bookshelf-container {
         padding: 0 0.5rem;
+        margin: 1rem auto;
     }
-    
-    .pilaster { width: 30px; }
     
     .shelf {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        padding: 20px 10px 0 10px;
-        min-height: 340px;
+        padding: 25px 15px 0 15px;
+        min-height: 360px;
     }
     
     .book {
         width: 140px;
         height: 220px;
     }
-    
-    .corbel-left, .corbel-right { display: none; }
     
     .reader-body { padding: 1.5rem 1rem; }
     
@@ -632,6 +469,17 @@ body {
         height: 60px;
         bottom: 20px;
         right: 20px;
+    }
+    
+    .reader-controls {
+        padding: 0.8rem 1rem;
+        gap: 0.5rem;
+    }
+    
+    .page-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
     }
 }
 
