@@ -3,34 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rak Buku Digital</title>
+    <title>Halimah Larasati's Bookshelf</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>📚 Rak Buku Gue</h1>
-        <p>Kumpulan karya, imajinasi, dan cerita.</p>
-        <button id="theme-toggle" title="Ganti Mode">🌙</button>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">📚 Bookshelf</h1>
+            <p class="subtitle" data-i18n="subtitle">Novels by Halimah Larasati</p>
+        </div>
+        <div class="lang-switch">
+            <button id="lang-id" class="lang-btn active">🇮🇩 ID</button>
+            <button id="lang-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
     </header>
 
-    <main id="bookshelf">
-        <!-- Buku-buku bakal muncul di sini secara otomatis -->
+    <!-- Rak Buku -->
+    <main class="bookshelf">
+        <div class="shelf-row">
+            <div class="shelf" id="shelf-1">
+                <!-- Buku akan muncul di sini -->
+            </div>
+        </div>
+        <div class="shelf-row">
+            <div class="shelf" id="shelf-2"></div>
+        </div>
+        <div class="shelf-row">
+            <div class="shelf" id="shelf-3"></div>
+        </div>
     </main>
 
-    <!-- Halaman Pembaca (Reader) -->
-    <div id="reader" class="hidden">
-        <div class="reader-header">
-            <button id="close-reader">← Kembali ke Rak</button>
-            <h2 id="reader-title"></h2>
-        </div>
-        <div class="reader-content">
-            <h3 id="chapter-title"></h3>
-            <div id="chapter-text"></div>
+    <!-- Tombol Lanjut Baca (Kuning) -->
+    <button id="continue-reading" class="continue-btn" title="Continue Reading">
+        <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
+            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
+        </svg>
+    </button>
+
+    <!-- Modal Baca Buku -->
+    <div id="reader-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="close-modal" class="close-btn">✕</button>
+                <h2 id="modal-title"></h2>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Isi novel -->
+            </div>
+            <div class="modal-footer">
+                <button id="prev-chapter" class="nav-btn">← Previous</button>
+                <span id="chapter-indicator"></span>
+                <button id="next-chapter" class="nav-btn">Next →</button>
+            </div>
         </div>
     </div>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
