@@ -2,19 +2,16 @@ let currentLang = 'id';
 let currentBook = null;
 let currentChapter = 0;
 
-// Load saved progress
 function loadProgress() {
     const saved = localStorage.getItem('readingProgress');
     return saved ? JSON.parse(saved) : null;
 }
 
-// Save progress
 function saveProgress(bookId, chapter) {
     const progress = { bookId, chapter, timestamp: Date.now() };
     localStorage.setItem('readingProgress', JSON.stringify(progress));
 }
 
-// Render books
 function renderBooks() {
     const shelves = [
         document.getElementById('shelf-1'),
@@ -38,7 +35,6 @@ function renderBooks() {
     });
 }
 
-// Open book
 function openBook(book, chapterIndex) {
     currentBook = book;
     currentChapter = chapterIndex;
@@ -48,7 +44,6 @@ function openBook(book, chapterIndex) {
     document.getElementById('reader-modal').classList.remove('hidden');
 }
 
-// Render chapter
 function renderChapter() {
     const chapter = currentBook.chapters[currentChapter];
     document.getElementById('modal-body').innerHTML = chapter.content;
@@ -61,14 +56,10 @@ function renderChapter() {
     document.getElementById('next-chapter').disabled = 
         currentChapter === currentBook.chapters.length - 1;
     
-    // Save progress
     saveProgress(currentBook.id, currentChapter);
-    
-    // Scroll to top
     document.getElementById('modal-body').scrollTop = 0;
 }
 
-// Navigation
 document.getElementById('prev-chapter').addEventListener('click', () => {
     if (currentChapter > 0) {
         currentChapter--;
@@ -83,12 +74,10 @@ document.getElementById('next-chapter').addEventListener('click', () => {
     }
 });
 
-// Close modal
 document.getElementById('close-modal').addEventListener('click', () => {
     document.getElementById('reader-modal').classList.add('hidden');
 });
 
-// Continue reading button
 document.getElementById('continue-reading').addEventListener('click', () => {
     const progress = loadProgress();
     if (progress) {
@@ -101,7 +90,6 @@ document.getElementById('continue-reading').addEventListener('click', () => {
     }
 });
 
-// Language switch
 document.getElementById('lang-id').addEventListener('click', () => {
     currentLang = 'id';
     updateLanguage();
@@ -127,6 +115,5 @@ function updateLanguage() {
     }
 }
 
-// Initialize
 renderBooks();
 updateLanguage();
