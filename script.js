@@ -44,7 +44,6 @@ function openBook(book, chapterIndex, pageIndex) {
     
     document.getElementById('reader-title').textContent = book.title;
     
-    // Gabung semua chapter jadi satu konten panjang
     let fullContent = '';
     book.chapters.forEach(chapter => {
         fullContent += `<h3>${chapter.title}</h3>`;
@@ -53,11 +52,9 @@ function openBook(book, chapterIndex, pageIndex) {
     
     document.getElementById('reader-content').innerHTML = fullContent;
     
-    // Hitung total "halaman" berdasarkan scroll
     const readerBody = document.getElementById('reader-body');
     readerBody.scrollTop = 0;
     
-    // Tunggu render selesai, lalu hitung halaman
     setTimeout(() => {
         const scrollHeight = readerBody.scrollHeight;
         const clientHeight = readerBody.clientHeight;
@@ -83,20 +80,17 @@ function updatePageIndicator() {
     document.getElementById('prev-page').disabled = currentPage <= 1;
     document.getElementById('next-page').disabled = currentPage >= totalPages;
     
-    // Scroll ke posisi halaman
     const readerBody = document.getElementById('reader-body');
     const scrollHeight = readerBody.scrollHeight;
     const clientHeight = readerBody.clientHeight;
     const scrollPerpage = scrollHeight / totalPages;
     readerBody.scrollTop = (currentPage - 1) * scrollPerpage;
     
-    // Save progress
     if (currentBook) {
         saveProgress(currentBook.id, currentChapter, currentPage);
     }
 }
 
-// Event listeners
 document.getElementById('prev-page').addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
@@ -116,7 +110,6 @@ document.getElementById('page-slider').addEventListener('input', (e) => {
     updatePageIndicator();
 });
 
-// Scroll tracking - update page number saat user scroll
 document.getElementById('reader-body').addEventListener('scroll', (e) => {
     const readerBody = e.target;
     const scrollHeight = readerBody.scrollHeight;
@@ -145,7 +138,6 @@ document.getElementById('continue-reading').addEventListener('click', () => {
         const book = booksData.find(b => b.id === progress.bookId);
         if (book) {
             openBook(book, progress.chapter || 0, progress.page || 0);
-            // Restore page position
             setTimeout(() => {
                 const readerBody = document.getElementById('reader-body');
                 const scrollHeight = readerBody.scrollHeight;
@@ -178,6 +170,5 @@ function updateLanguage() {
     document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
 }
 
-// Initialize
 renderBooks();
 updateLanguage();
