@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookshelf - Halimah Larasati</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Georgia, serif; background: #2c1810; min-height: 100vh; }
+        
+        .header {
+            background: linear-gradient(180deg, #3d2215 0%, #2c1810 100%);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #5a3a25;
+        }
+        .header-content { flex: 1; }
+        .title { font-size: 2.2rem; color: #f5e6d3; margin-bottom: 0.3rem; }
+        .subtitle { color: #c9a87c; font-size: 1.1rem; font-style: italic; }
+        .lang-switch { display: flex; gap: 0.5rem; }
+        .lang-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #f5e6d3;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .lang-btn.active { background: #f5e6d3; color: #2c1810; font-weight: bold; }
+        
+        .bookshelf-container { max-width: 900px; margin: 0 auto; padding: 1rem; }
+        .shelf-row { background: #2c1810; padding: 0; margin-bottom: 0; }
+        
+        .shelf {
+            background: linear-gradient(180deg, #f0e6d8 0%, #f5f0e8 20%, #faf6ee 50%, #f5f0e8 80%, #f0e6d8 100%);
+            padding: 40px 20px 0 20px;
+            min-height: 500px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            justify-items: center;
+            align-items: end;
+            position: relative;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .shelf::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: linear-gradient(180deg, #d4c4a8 0%, #c9b896 40%, #b8a888 100%);
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.4);
+        }
+        
+        .book {
+            width: 220px;
+            height: 340px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.4), -3px 0 8px rgba(0,0,0,0.2);
+        }
+        .book:hover { transform: translateY(-20px) scale(1.05); box-shadow: 15px 20px 35px rgba(0,0,0,0.6); z-index: 10; }
+        .book img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 3px; }
+        .book::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 12px; height: 100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, rgba(0,0,0,0.2) 100%);
+            border-radius: 3px 0 0 3px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .book-info {
+            position: absolute;
+            bottom: -60px;
+            left: 0; right: 0;
+            text-align: center;
+            color: #2c1810;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .book:hover .book-info { opacity: 1; }
+        .book-info h3 { font-size: 1.1rem; margin-bottom: 0.3rem; font-weight: 700; }
+        .book-info p { font-size: 0.85rem; opacity: 0.8; font-style: italic; }
+        
+        .continue-btn {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            width: 70px; height: 70px;
+            background: #d4b85c;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        .continue-btn:hover { transform: scale(1.15); background: #e0c86c; }
+        
+        .reader { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f5f0e8; z-index: 1000; display: flex; flex-direction: column; }
+        .reader.hidden { display: none; }
+        .reader-header {
+            background: linear-gradient(180deg, #8b7355 0%, #6b5340 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 3px solid #d4af37;
+        }
+        .back-btn { background: none; border: 2px solid #d4af37; color: #d4af37; font-size: 1.5rem; cursor: pointer; padding: 0.3rem 0.8rem; border-radius: 5px; }
+        .back-btn:hover { background: #d4af37; color: #2c1810; }
+        .reader-header h2 { flex: 1; margin: 0; color: #d4af37; font-size: 1.3rem; }
+        .reader-body { flex: 1; overflow-y: auto; padding: 2rem 1.5rem; }
+        #reader-content { max-width: 650px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9; color: #2c2c2c; }
+        #reader-content h3 { text-align: center; margin: 2rem 0 1.5rem 0; font-size: 1.5rem; }
+        #reader-content p { margin-bottom: 1.3rem; text-align: justify; text-indent: 1.5em; }
+        .reader-controls { background: #e8dcc8; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; border-top: 3px solid #8b7355; }
+        .page-nav { background: #8b7355; border: 2px solid #d4af37; color: #d4af37; width: 45px; height: 45px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; }
+        .page-nav:hover { background: #d4af37; color: #2c1810; }
+        .page-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+        #page-slider { flex: 1; height: 8px; -webkit-appearance: none; appearance: none; background: linear-gradient(90deg, #c9b896 0%, #8b7355 100%); border-radius: 4px; outline: none; }
+        #page-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #d4af37; cursor: pointer; border: 2px solid #8b6914; }
+        #page-indicator { font-weight: bold; min-width: 70px; text-align: center; color: #2c1810; }
+        
+        @media (max-width: 768px) {
+            .shelf { grid-template-columns: repeat(2, 1fr); gap: 1rem; padding: 25px 10px 0 10px; min-height: 380px; }
+            .book { width: 150px; height: 230px; }
+            .header { flex-direction: column; text-align: center; gap: 1rem; padding: 1rem; }
+            .title { font-size: 1.8rem; }
+            .subtitle { font-size: 0.9rem; }
+            .continue-btn { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">📚 Bookshelf</h1>
+            <p class="subtitle" id="subtitle-text">Novel karya Halimah Larasati</p>
+        </div>
+        <div class="lang-switch">
+            <button id="lang-id" class="lang-btn active">🇮🇩 ID</button>
+            <button id="lang-en" class="lang-btn">🇬🇧 EN</button>
+        </div>
+    </header>
+
+    <main class="bookshelf-container">
+        <div class="shelf-row"><div class="shelf" id="shelf-1"></div></div>
+        <div class="shelf-row"><div class="shelf" id="shelf-2"></div></div>
+        <div class="shelf-row"><div class="shelf" id="shelf-3"></div></div>
+        <div class="shelf-row"><div class="shelf" id="shelf-4"></div></div>
+    </main>
+
+    <button id="continue-reading" class="continue-btn" title="Lanjutkan Membaca">
+        <svg viewBox="0 0 24 24" fill="white" width="32" height="32">
+            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
+        </svg>
+    </button>
+
+    <div id="reader" class="reader hidden">
+        <div class="reader-header">
+            <button id="close-reader" class="back-btn">←</button>
+            <h2 id="reader-title"></h2>
+        </div>
+        <div class="reader-body" id="reader-body">
+            <div id="reader-content"></div>
+        </div>
+        <div class="reader-controls">
+            <button id="prev-page" class="page-nav">‹</button>
+            <input type="range" id="page-slider" min="1" max="100" value="1">
+            <span id="page-indicator">1 / 1</span>
+            <button id="next-page" class="page-nav">›</button>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            id: { subtitle: "Novel karya Halimah Larasati", continueReading: "Lanjutkan Membaca" },
+            en: { subtitle: "Novels by Halimah Larasati", continueReading: "Continue Reading" }
+        };
+
+        const booksData = [
+            {
+                id: 1,
+                title: "Senja di Ujung Jalan",
+                author: "Halimah Larasati",
+                cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400",
+                synopsis: "Versi Indonesia",
+                chapters: [
+                    { title: "Bab 1: Awal Mula", content: "<p>Langit sore itu berwarna jingga, memantulkan cahaya terakhir matahari yang enggan untuk pergi. Aku duduk di bangku taman, memandangi daun-daun kering yang berjatuhan.</p><p>\"Kau tahu,\" kata suara di sebelahku, \"daun yang jatuh bukan karena angin, tapi karena waktunya memang sudah habis.\"</p><p>Aku menoleh. Seorang pria tua dengan topi fedora usang sedang tersenyum padaku. Itulah hari di mana hidupku berubah selamanya.</p>" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Twilight at Journey's End",
+                author: "Halimah Larasati",
+                cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
+                synopsis: "English Version",
+                chapters: [
+                    { title: "Chapter 1: The Beginning", content: "<p>The evening sky was orange, reflecting the last light of the sun reluctant to leave. I sat on a park bench, watching the dry leaves fall.</p><p>\"You know,\" a voice beside me said, \"leaves don't fall because of the wind, but because their time has run out.\"</p><p>I turned. An old man with a worn fedora hat was smiling at me. That was the day my life changed forever.</p>" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Kode Rahasia",
+                author: "Halimah Larasati",
+                cover: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400",
+                synopsis: "Versi Indonesia",
+                chapters: [
+                    { title: "Prolog: Layar Hitam", content: "<p>Layar monitorku menyala hijau dalam gelapnya ruangan. Baris demi baris kode berjalan dengan cepat. Aku menahan napas.</p><p>Access Granted.</p><p>Aku berhasil masuk. Tapi yang ada di dalam server itu bukan data perusahaan, melainkan daftar nama-nama orang yang akan hilang besok pagi.</p>" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Secret Code",
+                author: "Halimah Larasati",
+                cover: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400",
+                synopsis: "English Version",
+                chapters: [
+                    { title: "Prologue: Black Screen", content: "<p>My monitor screen glowed green in the darkness of the room. Lines of code ran quickly. I held my breath.</p><p>Access Granted.</p><p>I made it in. But what was inside the server wasn't company data, but a list of people who would disappear tomorrow morning.</p>" }
+                ]
+            }
+        ];
+
+        let currentLang = 'id';
+        let currentBook = null;
+        let currentChapter = 0;
+        let currentPage = 0;
+        let totalPages = 0;
+
+        function loadProgress() {
+            const saved = localStorage.getItem('readingProgress');
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        function saveProgress(bookId, chapter, page) {
+            const progress = { bookId, chapter, page, timestamp: Date.now() };
+            localStorage.setItem('readingProgress', JSON.stringify(progress));
+        }
+
+        function renderBooks() {
+            const shelves = [
+                document.getElementById('shelf-1'),
+                document.getElementById('shelf-2'),
+                document.getElementById('shelf-3'),
+                document.getElementById('shelf-4')
+            ];
+            
+            shelves.forEach(shelf => shelf.innerHTML = '');
+            
+            // 2 buku per rak
+            booksData.forEach((book, index) => {
+                const shelfIndex = Math.floor(index / 2);
+                if (shelfIndex < shelves.length) {
+                    const bookEl = document.createElement('div');
+                    bookEl.className = 'book';
+                    bookEl.innerHTML = '<img src="' + book.cover + '" alt="' + book.title + '"><div class="book-info"><h3>' + book.title + '</h3><p>' + book.synopsis + '</p></div>';
+                    bookEl.addEventListener('click', () => openBook(book, 0, 0));
+                    shelves[shelfIndex].appendChild(bookEl);
+                }
+            });
+        }
+
+        function openBook(book, chapterIndex, pageIndex) {
+            currentBook = book;
+            currentChapter = chapterIndex;
+            document.getElementById('reader-title').textContent = book.title;
+            
+            let fullContent = '';
+            book.chapters.forEach(chapter => {
+                fullContent += '<h3>' + chapter.title + '</h3>' + chapter.content;
+            });
+            
+            document.getElementById('reader-content').innerHTML = fullContent;
+            
+            const readerBody = document.getElementById('reader-body');
+            readerBody.scrollTop = 0;
+            
+            setTimeout(() => {
+                const scrollHeight = readerBody.scrollHeight;
+                const clientHeight = readerBody.clientHeight;
+                totalPages = Math.ceil(scrollHeight / clientHeight);
+                if (totalPages < 1) totalPages = 1;
+                
+                document.getElementById('page-slider').max = totalPages;
+                document.getElementById('page-slider').value = 1;
+                currentPage = 1;
+                updatePageIndicator();
+            }, 100);
+            
+            document.getElementById('reader').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updatePageIndicator() {
+            document.getElementById('page-indicator').textContent = currentPage + ' / ' + totalPages;
+            document.getElementById('page-slider').value = currentPage;
+            document.getElementById('prev-page').disabled = currentPage <= 1;
+            document.getElementById('next-page').disabled = currentPage >= totalPages;
+            
+            const readerBody = document.getElementById('reader-body');
+            const scrollHeight = readerBody.scrollHeight;
+            const scrollPerpage = scrollHeight / totalPages;
+            readerBody.scrollTop = (currentPage - 1) * scrollPerpage;
+            
+            if (currentBook) {
+                saveProgress(currentBook.id, currentChapter, currentPage);
+            }
+        }
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; updatePageIndicator(); }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPage < totalPages) { currentPage++; updatePageIndicator(); }
+        });
+
+        document.getElementById('page-slider').addEventListener('input', (e) => {
+            currentPage = parseInt(e.target.value);
+            updatePageIndicator();
+        });
+
+        document.getElementById('reader-body').addEventListener('scroll', (e) => {
+            const readerBody = e.target;
+            const scrollHeight = readerBody.scrollHeight;
+            const scrollTop = readerBody.scrollTop;
+            const scrollPerpage = scrollHeight / totalPages;
+            const newPage = Math.floor(scrollTop / scrollPerpage) + 1;
+            
+            if (newPage !== currentPage && newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                document.getElementById('page-slider').value = currentPage;
+                document.getElementById('page-indicator').textContent = currentPage + ' / ' + totalPages;
+            }
+        });
+
+        document.getElementById('close-reader').addEventListener('click', () => {
+            document.getElementById('reader').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        document.getElementById('continue-reading').addEventListener('click', () => {
+            const progress = loadProgress();
+            if (progress) {
+                const book = booksData.find(b => b.id === progress.bookId);
+                if (book) { openBook(book, progress.chapter || 0, progress.page || 0); }
+            } else {
+                alert(currentLang === 'id' ? 'Belum ada progres bacaan!' : 'No reading progress yet!');
+            }
+        });
+
+        document.getElementById('lang-id').addEventListener('click', () => {
+            currentLang = 'id';
+            updateLanguage();
+        });
+
+        document.getElementById('lang-en').addEventListener('click', () => {
+            currentLang = 'en';
+            updateLanguage();
+        });
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.getElementById('subtitle-text').textContent = t.subtitle;
+            document.getElementById('continue-reading').title = t.continueReading;
+            document.getElementById('lang-id').classList.toggle('active', currentLang === 'id');
+            document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+        }
+
+        renderBooks();
+        updateLanguage();
+    </script>
+</body>
+  </html>
