@@ -263,7 +263,6 @@
             
             shelves.forEach(shelf => shelf.innerHTML = '');
             
-            // 2 buku per rak
             booksData.forEach((book, index) => {
                 const shelfIndex = Math.floor(index / 2);
                 if (shelfIndex < shelves.length) {
@@ -387,4 +386,4 @@
         updateLanguage();
     </script>
 </body>
-  </html>
+</html>
