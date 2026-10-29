@@ -22,22 +22,24 @@ function renderBooks() {
         document.getElementById('shelf-4')
     ];
     
-    // Clear shelves dulu
     shelves.forEach(shelf => shelf.innerHTML = '');
     
+    // 2 buku per rak
     booksData.forEach((book, index) => {
-        const shelfIndex = index % 4;
-        const bookEl = document.createElement('div');
-        bookEl.className = 'book';
-        bookEl.innerHTML = `
-            <img src="${book.cover}" alt="${book.title}">
-            <div class="book-info">
-                <h3>${book.title}</h3>
-                <p>${book.synopsis}</p>
-            </div>
-        `;
-        bookEl.addEventListener('click', () => openBook(book, 0, 0));
-        shelves[shelfIndex].appendChild(bookEl);
+        const shelfIndex = Math.floor(index / 2);
+        if (shelfIndex < shelves.length) {
+            const bookEl = document.createElement('div');
+            bookEl.className = 'book';
+            bookEl.innerHTML = `
+                <img src="${book.cover}" alt="${book.title}">
+                <div class="book-info">
+                    <h3>${book.title}</h3>
+                    <p>${book.synopsis}</p>
+                </div>
+            `;
+            bookEl.addEventListener('click', () => openBook(book, 0, 0));
+            shelves[shelfIndex].appendChild(bookEl);
+        }
     });
 }
 
