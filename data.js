@@ -1,12 +1,28 @@
-// FORMAT DATA BUKU
-// cover: pakai link gambar atau taruh gambar di folder yang sama
-// chapters: isi dengan array bab. 
+// Translations
+const translations = {
+    id: {
+        subtitle: "Novel karya Halimah Larasati",
+        continueReading: "Lanjutkan Membaca",
+        previous: "← Sebelumnya",
+        next: "Selanjutnya →",
+        chapter: "Bab"
+    },
+    en: {
+        subtitle: "Novels by Halimah Larasati",
+        continueReading: "Continue Reading",
+        previous: "← Previous",
+        next: "Next →",
+        chapter: "Chapter"
+    }
+};
+
+// Data Buku
 const booksData = [
     {
         id: 1,
         title: "Senja di Ujung Jalan",
-        author: "Gue Sendiri",
-        cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400", // Ganti dengan link cover lo
+        author: "Halimah Larasati",
+        cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400",
         synopsis: "Sebuah cerita tentang perjalanan menemukan diri sendiri.",
         chapters: [
             {
@@ -26,7 +42,7 @@ const booksData = [
     {
         id: 2,
         title: "Kode Rahasia",
-        author: "Gue Sendiri",
+        author: "Halimah Larasati",
         cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
         synopsis: "Thriller tentang hacker yang menemukan konspirasi global.",
         chapters: [
