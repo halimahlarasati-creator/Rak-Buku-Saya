@@ -22,6 +22,9 @@ function renderBooks() {
         document.getElementById('shelf-4')
     ];
     
+    // Clear shelves dulu
+    shelves.forEach(shelf => shelf.innerHTML = '');
+    
     booksData.forEach((book, index) => {
         const shelfIndex = index % 4;
         const bookEl = document.createElement('div');
@@ -72,7 +75,6 @@ function openBook(book, chapterIndex, pageIndex) {
 }
 
 function updatePageIndicator() {
-    const t = translations[currentLang];
     document.getElementById('page-indicator').textContent = 
         `${currentPage} / ${totalPages}`;
     document.getElementById('page-slider').value = currentPage;
@@ -82,7 +84,6 @@ function updatePageIndicator() {
     
     const readerBody = document.getElementById('reader-body');
     const scrollHeight = readerBody.scrollHeight;
-    const clientHeight = readerBody.clientHeight;
     const scrollPerpage = scrollHeight / totalPages;
     readerBody.scrollTop = (currentPage - 1) * scrollPerpage;
     
@@ -113,7 +114,6 @@ document.getElementById('page-slider').addEventListener('input', (e) => {
 document.getElementById('reader-body').addEventListener('scroll', (e) => {
     const readerBody = e.target;
     const scrollHeight = readerBody.scrollHeight;
-    const clientHeight = readerBody.clientHeight;
     const scrollTop = readerBody.scrollTop;
     
     const scrollPerpage = scrollHeight / totalPages;
@@ -138,13 +138,6 @@ document.getElementById('continue-reading').addEventListener('click', () => {
         const book = booksData.find(b => b.id === progress.bookId);
         if (book) {
             openBook(book, progress.chapter || 0, progress.page || 0);
-            setTimeout(() => {
-                const readerBody = document.getElementById('reader-body');
-                const scrollHeight = readerBody.scrollHeight;
-                const clientHeight = readerBody.clientHeight;
-                const scrollPerpage = scrollHeight / totalPages;
-                readerBody.scrollTop = (progress.page - 1) * scrollPerpage;
-            }, 200);
         }
     } else {
         alert(currentLang === 'id' ? 'Belum ada progres bacaan!' : 'No reading progress yet!');
