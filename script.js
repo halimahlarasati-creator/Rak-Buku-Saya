@@ -16,11 +16,12 @@ function renderBooks() {
     const shelves = [
         document.getElementById('shelf-1'),
         document.getElementById('shelf-2'),
-        document.getElementById('shelf-3')
+        document.getElementById('shelf-3'),
+        document.getElementById('shelf-4')
     ];
     
     booksData.forEach((book, index) => {
-        const shelfIndex = index % 3;
+        const shelfIndex = index % 4;
         const bookEl = document.createElement('div');
         bookEl.className = 'book';
         bookEl.innerHTML = `
