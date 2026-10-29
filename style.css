@@ -1,127 +1,298 @@
-:root {
-    --bg-color: #f4f1ea;
-    --text-color: #2c2c2c;
-    --card-bg: #ffffff;
-    --accent: #d35400;
-}
-
-[data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --text-color: #e0e0e0;
-    --card-bg: #2d2d2d;
-    --accent: #e67e22;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Georgia', serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-header {
-    text-align: center;
-    padding: 2rem;
-    position: relative;
+/* Header */
+.header {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-header h1 { margin: 0; font-size: 2.5rem; }
-header p { color: #666; font-style: italic; }
+.header-content {
+    flex: 1;
+}
 
-#theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
+.title {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.3rem;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.lang-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
 }
 
-/* --- RAK BUKU (GRID) --- */
-#bookshelf {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 2rem;
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.lang-btn.active {
+    background: white;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Rak Buku */
+.bookshelf {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.book-card {
-    background: var(--card-bg);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+.shelf-row {
+    margin-bottom: 3rem;
+}
+
+.shelf {
+    background: linear-gradient(180deg, #8B6F47 0%, #A0826D 50%, #8B6F47 100%);
+    padding: 2rem;
+    min-height: 350px;
+    border-radius: 10px;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 -5px 10px rgba(0, 0, 0, 0.3),
+        inset 0 5px 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 2rem;
+    align-items: flex-end;
+    position: relative;
+}
+
+.shelf::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, #6B5340 0%, #4A3728 100%);
+    border-radius: 0 0 10px 10px;
+}
+
+/* Buku */
+.book {
+    width: 180px;
+    height: 280px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    position: relative;
+    box-shadow: 
+        5px 5px 15px rgba(0, 0, 0, 0.4),
+        -2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.book-card:hover {
-    transform: translateY(-10px) rotateY(-5deg); /* Efek 3D dikit */
+.book:hover {
+    transform: translateY(-20px) rotateY(-10deg);
 }
 
-.book-card img {
+.book img {
     width: 100%;
-    height: 280px;
+    height: 100%;
     object-fit: cover;
+    border-radius: 5px;
 }
 
 .book-info {
-    padding: 1rem;
+    position: absolute;
+    bottom: -60px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .book-info h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
 }
 
 .book-info p {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.9;
 }
 
-/* --- HALAMAN PEMBAACA (READER) --- */
-#reader {
+/* Tombol Lanjut Baca */
+.continue-btn {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: var(--bg-color);
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    background: #F4D03F;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 100;
-    overflow-y: auto;
+}
+
+.continue-btn:hover {
+    transform: scale(1.1);
+    background: #F7DC6F;
+}
+
+/* Modal Baca */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 2rem;
 }
 
-.hidden { display: none !important; }
-
-.reader-header {
-    max-width: 800px;
-    margin: 0 auto 2rem auto;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.modal.hidden {
+    display: none;
 }
 
-#close-reader {
-    background: var(--accent);
+.modal-content {
+    background: #f4f1ea;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    background: #2c3e50;
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.close-btn:hover {
+    color: #e74c3c;
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    flex: 1;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+}
+
+.modal-body p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.modal-footer {
+    background: #ecf0f1;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 2px solid #bdc3c7;
+}
+
+.nav-btn {
+    background: #3498db;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.5rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    transition: background 0.3s;
 }
 
-.reader-content {
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.8; /* Jarak antar baris biar enak dibaca */
-    font-size: 1.1rem;
+.nav-btn:hover {
+    background: #2980b9;
 }
 
-.reader-content p {
-    margin-bottom: 1.5rem;
-    text-align: justify;
-      }
+.nav-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+#chapter-indicator {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .shelf {
+        gap: 1rem;
+        padding: 1rem;
+    }
+    
+    .book {
+        width: 120px;
+        height: 200px;
+    }
+    
+    .modal-content {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+    }
