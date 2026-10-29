@@ -1,4 +1,3 @@
-// Translations
 const translations = {
     id: {
         subtitle: "Novel karya Halimah Larasati",
@@ -16,7 +15,6 @@ const translations = {
     }
 };
 
-// Data Buku
 const booksData = [
     {
         id: 1,
