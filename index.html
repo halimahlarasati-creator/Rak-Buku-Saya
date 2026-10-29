@@ -5,36 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookshelf - Halimah Larasati</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- SVG Ornamen (hidden, buat reuse) -->
+    <svg style="display:none">
+        <defs>
+            <!-- Ornamen Acanthus Leaf -->
+            <symbol id="acanthus" viewBox="0 0 100 100">
+                <path d="M50 10 C30 10, 20 30, 20 50 C20 70, 35 85, 50 90 C65 85, 80 70, 80 50 C80 30, 70 10, 50 10 Z M50 20 C60 20, 70 35, 70 50 C70 65, 60 78, 50 82 C40 78, 30 65, 30 50 C30 35, 40 20, 50 20 Z" fill="currentColor"/>
+                <path d="M50 25 Q45 40, 50 55 Q55 40, 50 25" fill="currentColor" opacity="0.6"/>
+                <path d="M35 45 Q45 50, 50 55 Q45 60, 35 65" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M65 45 Q55 50, 50 55 Q55 60, 65 65" fill="none" stroke="currentColor" stroke-width="2"/>
+            </symbol>
+            
+            <!-- Scrollwork -->
+            <symbol id="scrollwork" viewBox="0 0 200 50">
+                <path d="M10 25 C10 10, 30 10, 40 25 C50 40, 70 40, 80 25 C90 10, 110 10, 120 25 C130 40, 150 40, 160 25 C170 10, 190 10, 190 25" fill="none" stroke="currentColor" stroke-width="3"/>
+                <circle cx="10" cy="25" r="4" fill="currentColor"/>
+                <circle cx="190" cy="25" r="4" fill="currentColor"/>
+                <circle cx="100" cy="25" r="3" fill="currentColor"/>
+            </symbol>
+            
+            <!-- Rosette -->
+            <symbol id="rosette" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M50 15 Q55 35, 50 50 Q45 35, 50 15" fill="currentColor"/>
+                <path d="M50 85 Q55 65, 50 50 Q45 65, 50 85" fill="currentColor"/>
+                <path d="M15 50 Q35 45, 50 50 Q35 55, 15 50" fill="currentColor"/>
+                <path d="M85 50 Q65 45, 50 50 Q65 55, 85 50" fill="currentColor"/>
+                <path d="M25 25 Q40 40, 50 50 Q40 40, 25 25" fill="currentColor"/>
+                <path d="M75 75 Q60 60, 50 50 Q60 60, 75 75" fill="currentColor"/>
+                <path d="M75 25 Q60 40, 50 50 Q60 40, 75 25" fill="currentColor"/>
+                <path d="M25 75 Q40 60, 50 50 Q40 60, 25 75" fill="currentColor"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+            </symbol>
+            
+            <!-- Corbel (bracket) -->
+            <symbol id="corbel" viewBox="0 0 100 80">
+                <path d="M10 10 L90 10 L90 20 L70 20 L70 70 L30 70 L30 20 L10 20 Z" fill="currentColor"/>
+                <path d="M30 20 Q50 35, 70 20" fill="none" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="45" r="5" fill="currentColor"/>
+            </symbol>
+        </defs>
+    </svg>
+
     <!-- Header -->
     <header class="header">
+        <div class="header-ornament top"></div>
         <div class="header-content">
             <h1 class="title">📚 Bookshelf</h1>
             <p class="subtitle" data-i18n="subtitle">Novels by Halimah Larasati</p>
         </div>
         <div class="lang-switch">
-            <button id="lang-id" class="lang-btn active">🇩 ID</button>
-            <button id="lang-en" class="lang-btn">🇧 EN</button>
+            <button id="lang-id" class="lang-btn active">🇮🇩 ID</button>
+            <button id="lang-en" class="lang-btn">🇬🇧 EN</button>
         </div>
+        <div class="header-ornament bottom"></div>
     </header>
 
     <!-- Rak Buku Antik -->
     <main class="bookshelf-container">
-        <div class="shelf-row">
-            <div class="shelf" id="shelf-1"></div>
+        <!-- Tiang kiri -->
+        <div class="pilaster left"></div>
+        
+        <div class="shelf-unit">
+            <!-- Crown Molding di atas -->
+            <div class="crown-molding">
+                <div class="molding-ornament">
+                    <svg class="ornament-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+                        <use href="#scrollwork" x="50" y="10" width="200" height="40"/>
+                        <use href="#rosette" x="470" y="5" width="60" height="50"/>
+                        <use href="#scrollwork" x="750" y="10" width="200" height="40"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="shelf-row">
+                <div class="shelf" id="shelf-1"></div>
+                <div class="corbel-left"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+                <div class="corbel-right"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+            </div>
+            
+            <div class="shelf-divider"></div>
+            
+            <div class="shelf-row">
+                <div class="shelf" id="shelf-2"></div>
+                <div class="corbel-left"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+                <div class="corbel-right"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+            </div>
+            
+            <div class="shelf-divider"></div>
+            
+            <div class="shelf-row">
+                <div class="shelf" id="shelf-3"></div>
+                <div class="corbel-left"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+                <div class="corbel-right"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+            </div>
+            
+            <div class="shelf-divider"></div>
+            
+            <div class="shelf-row">
+                <div class="shelf" id="shelf-4"></div>
+                <div class="corbel-left"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+                <div class="corbel-right"><svg viewBox="0 0 100 80"><use href="#corbel"/></svg></div>
+            </div>
+            
+            <!-- Base molding di bawah -->
+            <div class="base-molding">
+                <div class="molding-ornament">
+                    <svg class="ornament-svg" viewBox="0 0 1000 40" preserveAspectRatio="none">
+                        <use href="#scrollwork" x="100" y="5" width="250" height="30"/>
+                        <use href="#rosette" x="475" y="0" width="50" height="40"/>
+                        <use href="#scrollwork" x="650" y="5" width="250" height="30"/>
+                    </svg>
+                </div>
+            </div>
         </div>
-        <div class="shelf-row">
-            <div class="shelf" id="shelf-2"></div>
-        </div>
-        <div class="shelf-row">
-            <div class="shelf" id="shelf-3"></div>
-        </div>
-        <div class="shelf-row">
-            <div class="shelf" id="shelf-4"></div>
-        </div>
+        
+        <!-- Tiang kanan -->
+        <div class="pilaster right"></div>
     </main>
 
     <!-- Tombol Lanjut Baca -->
