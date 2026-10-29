@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rak Buku Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>📚 Rak Buku Gue</h1>
+        <p>Kumpulan karya, imajinasi, dan cerita.</p>
+        <button id="theme-toggle" title="Ganti Mode">🌙</button>
+    </header>
+
+    <main id="bookshelf">
+        <!-- Buku-buku bakal muncul di sini secara otomatis -->
+    </main>
+
+    <!-- Halaman Pembaca (Reader) -->
+    <div id="reader" class="hidden">
+        <div class="reader-header">
+            <button id="close-reader">← Kembali ke Rak</button>
+            <h2 id="reader-title"></h2>
+        </div>
+        <div class="reader-content">
+            <h3 id="chapter-title"></h3>
+            <div id="chapter-text"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
