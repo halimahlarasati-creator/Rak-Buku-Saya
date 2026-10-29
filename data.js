@@ -51,5 +51,19 @@ const booksData = [
                           <p>Aku berhasil masuk. Tapi yang ada di dalam server itu bukan data perusahaan, melainkan daftar nama-nama orang yang akan "hilang" besok pagi. Dan namaku ada di urutan ketiga.</p>`
             }
         ]
+    },
+    {
+        id: 3,
+        title: "Bunga di Musim Hujan",
+        author: "Halimah Larasati",
+        cover: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400",
+        synopsis: "Romansa tentang cinta yang tumbuh di saat yang tak terduga.",
+        chapters: [
+            {
+                title: "Bab 1: Hujan Pertama",
+                content: `<p>Hujan turun tanpa peringatan. Aku berlari mencari tempat berteduh di bawah pohon besar di taman kota.</p>
+                          <p>Di sana, seseorang sudah lebih dulu berdiri. Dia menatapku dengan senyum tipis. "Hujan selalu datang tepat waktu," katanya.</p>`
+            }
+        ]
     }
 ];
