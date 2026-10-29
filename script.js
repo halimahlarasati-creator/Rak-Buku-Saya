@@ -1,62 +1,132 @@
-const bookshelf = document.getElementById('bookshelf');
-const reader = document.getElementById('reader');
-const readerTitle = document.getElementById('reader-title');
-const chapterTitle = document.getElementById('chapter-title');
-const chapterText = document.getElementById('chapter-text');
-const closeReader = document.getElementById('close-reader');
-const themeToggle = document.getElementById('theme-toggle');
+let currentLang = 'id';
+let currentBook = null;
+let currentChapter = 0;
 
-// 1. TAMPILKAN RAK BUKU
+// Load saved progress
+function loadProgress() {
+    const saved = localStorage.getItem('readingProgress');
+    return saved ? JSON.parse(saved) : null;
+}
+
+// Save progress
+function saveProgress(bookId, chapter) {
+    const progress = { bookId, chapter, timestamp: Date.now() };
+    localStorage.setItem('readingProgress', JSON.stringify(progress));
+}
+
+// Render books
 function renderBooks() {
-    bookshelf.innerHTML = '';
-    booksData.forEach(book => {
-        const card = document.createElement('div');
-        card.className = 'book-card';
-        card.innerHTML = `
-            <img src="${book.cover}" alt="Cover ${book.title}">
+    const shelves = [
+        document.getElementById('shelf-1'),
+        document.getElementById('shelf-2'),
+        document.getElementById('shelf-3')
+    ];
+    
+    booksData.forEach((book, index) => {
+        const shelfIndex = index % 3;
+        const bookEl = document.createElement('div');
+        bookEl.className = 'book';
+        bookEl.innerHTML = `
+            <img src="${book.cover}" alt="${book.title}">
             <div class="book-info">
                 <h3>${book.title}</h3>
                 <p>${book.synopsis}</p>
             </div>
         `;
-        // Kalau di-klik, buka buku
-        card.addEventListener('click', () => openBook(book));
-        bookshelf.appendChild(card);
+        bookEl.addEventListener('click', () => openBook(book, 0));
+        shelves[shelfIndex].appendChild(bookEl);
     });
 }
 
-// 2. BUKA HALAMAN BACA
-function openBook(book) {
-    readerTitle.innerText = book.title;
+// Open book
+function openBook(book, chapterIndex) {
+    currentBook = book;
+    currentChapter = chapterIndex;
     
-    // Gabung semua bab jadi satu tampilan (bisa dipecah nanti kalau mau)
-    let fullContent = '';
-    book.chapters.forEach(chapter => {
-        fullContent += `<h3 style="text-align:center; margin-top:2rem;">${chapter.title}</h3>`;
-        fullContent += chapter.content;
-    });
-    
-    chapterText.innerHTML = fullContent;
-    reader.classList.remove('hidden');
-    window.scrollTo(0, 0);
+    document.getElementById('modal-title').textContent = book.title;
+    renderChapter();
+    document.getElementById('reader-modal').classList.remove('hidden');
 }
 
-// 3. TUTUP HALAMAN BACA
-closeReader.addEventListener('click', () => {
-    reader.classList.add('hidden');
-});
+// Render chapter
+function renderChapter() {
+    const chapter = currentBook.chapters[currentChapter];
+    document.getElementById('modal-body').innerHTML = chapter.content;
+    
+    const t = translations[currentLang];
+    document.getElementById('chapter-indicator').textContent = 
+        `${t.chapter} ${currentChapter + 1} / ${currentBook.chapters.length}`;
+    
+    document.getElementById('prev-chapter').disabled = currentChapter === 0;
+    document.getElementById('next-chapter').disabled = 
+        currentChapter === currentBook.chapters.length - 1;
+    
+    // Save progress
+    saveProgress(currentBook.id, currentChapter);
+    
+    // Scroll to top
+    document.getElementById('modal-body').scrollTop = 0;
+}
 
-// 4. FITUR DARK MODE
-themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    if (currentTheme === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
-        themeToggle.innerText = '🌙';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        themeToggle.innerText = '☀️';
+// Navigation
+document.getElementById('prev-chapter').addEventListener('click', () => {
+    if (currentChapter > 0) {
+        currentChapter--;
+        renderChapter();
     }
 });
 
-// Jalankan saat web dibuka
+document.getElementById('next-chapter').addEventListener('click', () => {
+    if (currentChapter < currentBook.chapters.length - 1) {
+        currentChapter++;
+        renderChapter();
+    }
+});
+
+// Close modal
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('reader-modal').classList.add('hidden');
+});
+
+// Continue reading button
+document.getElementById('continue-reading').addEventListener('click', () => {
+    const progress = loadProgress();
+    if (progress) {
+        const book = booksData.find(b => b.id === progress.bookId);
+        if (book) {
+            openBook(book, progress.chapter);
+        }
+    } else {
+        alert(currentLang === 'id' ? 'Belum ada progres bacaan!' : 'No reading progress yet!');
+    }
+});
+
+// Language switch
+document.getElementById('lang-id').addEventListener('click', () => {
+    currentLang = 'id';
+    updateLanguage();
+});
+
+document.getElementById('lang-en').addEventListener('click', () => {
+    currentLang = 'en';
+    updateLanguage();
+});
+
+function updateLanguage() {
+    const t = translations[currentLang];
+    document.querySelector('[data-i18n="subtitle"]').textContent = t.subtitle;
+    document.getElementById('continue-reading').title = t.continueReading;
+    document.getElementById('prev-chapter').textContent = t.previous;
+    document.getElementById('next-chapter').textContent = t.next;
+    
+    document.getElementById('lang-id').classList.toggle('active', currentLang === 'id');
+    document.getElementById('lang-en').classList.toggle('active', currentLang === 'en');
+    
+    if (currentBook) {
+        renderChapter();
+    }
+}
+
+// Initialize
 renderBooks();
+updateLanguage();
