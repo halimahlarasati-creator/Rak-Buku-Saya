@@ -6,53 +6,23 @@
 
 body {
     font-family: 'Georgia', serif;
+    background: #3d2817;
+    min-height: 100vh;
     overflow-x: hidden;
-    background: #2c1810;
-}
-
-/* Background Rak Kayu */
-.bookshelf-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(180deg, #8B6F47 0%, #A0826D 50%, #8B6F47 100%);
-    background-size: 100% 200px;
-    z-index: -1;
-}
-
-.bookshelf-background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 50px,
-            rgba(0,0,0,0.1) 50px,
-            rgba(0,0,0,0.1) 51px
-        );
-    opacity: 0.3;
 }
 
 /* Header */
 .header {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
+    background: linear-gradient(180deg, #2c1810 0%, #4a2e1f 100%);
     padding: 1.5rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 3px solid #6b4c35;
 }
 
 .header-content {
@@ -60,14 +30,14 @@ body {
 }
 
 .title {
-    font-size: 2.5rem;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-size: 2.2rem;
+    color: #f5e6d3;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 0.3rem;
 }
 
 .subtitle {
-    color: rgba(255, 255, 255, 0.9);
+    color: #d4b896;
     font-size: 1.1rem;
     font-style: italic;
 }
@@ -78,9 +48,9 @@ body {
 }
 
 .lang-btn {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #f5e6d3;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     cursor: pointer;
@@ -89,79 +59,85 @@ body {
 }
 
 .lang-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .lang-btn.active {
-    background: white;
-    color: #333;
+    background: #f5e6d3;
+    color: #2c1810;
     font-weight: bold;
 }
 
-/* Rak Buku 3D */
+/* Rak Buku Container */
 .bookshelf-container {
-    padding: 2rem;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
+/* Setiap Baris Rak */
 .shelf-row {
-    margin-bottom: 4rem;
-    perspective: 1000px;
+    margin-bottom: 0;
+    background: #2c1810;
+    padding: 0;
 }
 
+/* Rak Individual */
 .shelf {
-    background: 
-        linear-gradient(180deg, 
-            #6B5340 0%, 
-            #8B6F47 10%, 
-            #A0826D 50%, 
-            #8B6F47 90%, 
-            #6B5340 100%);
-    padding: 3rem 2rem 2rem 2rem;
-    min-height: 400px;
-    border-radius: 10px;
-    box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.6),
-        inset 0 -10px 20px rgba(0, 0, 0, 0.4),
-        inset 0 10px 20px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(180deg, 
+        #d4b896 0%, 
+        #e8d5b7 10%, 
+        #f0e0c8 50%, 
+        #e8d5b7 90%, 
+        #d4b896 100%);
+    padding: 2rem 2rem 0 2rem;
+    min-height: 420px;
     display: flex;
-    gap: 2rem;
+    justify-content: space-around;
     align-items: flex-end;
+    gap: 2rem;
     position: relative;
-    border-bottom: 20px solid #4A3728;
+    box-shadow: 
+        inset 0 -5px 15px rgba(0, 0, 0, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Papan Rak di Bawah */
 .shelf::after {
     content: '';
     position: absolute;
-    bottom: -20px;
+    bottom: 0;
     left: 0;
     right: 0;
-    height: 20px;
-    background: linear-gradient(180deg, #4A3728 0%, #2c1810 100%);
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    height: 25px;
+    background: linear-gradient(180deg, 
+        #c9a87c 0%, 
+        #b8956a 50%, 
+        #a67c52 100%);
+    box-shadow: 
+        0 5px 10px rgba(0, 0, 0, 0.4),
+        inset 0 2px 3px rgba(255, 255, 255, 0.2);
 }
 
-/* Buku 3D */
+/* Buku */
 .book {
-    width: 160px;
-    height: 260px;
+    width: 220px;
+    height: 340px;
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     position: relative;
-    transform-style: preserve-3d;
+    margin-bottom: 25px;
     box-shadow: 
-        8px 8px 20px rgba(0, 0, 0, 0.6),
-        -3px 0 10px rgba(0, 0, 0, 0.3);
+        5px 5px 15px rgba(0, 0, 0, 0.5),
+        -2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .book:hover {
-    transform: translateY(-30px) rotateY(-15deg) scale(1.05);
+    transform: translateY(-15px) scale(1.05);
     box-shadow: 
-        15px 15px 30px rgba(0, 0, 0, 0.7),
-        -5px 0 15px rgba(0, 0, 0, 0.4);
+        10px 10px 25px rgba(0, 0, 0, 0.6),
+        -3px 0 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
 }
 
 .book img {
@@ -169,33 +145,17 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 3px;
-    box-shadow: 
-        inset 2px 0 5px rgba(255, 255, 255, 0.2),
-        inset -2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.book::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 10px;
-    height: 100%;
-    background: linear-gradient(90deg, 
-        rgba(255,255,255,0.3) 0%, 
-        rgba(255,255,255,0.1) 50%, 
-        rgba(0,0,0,0.2) 100%);
-    border-radius: 3px 0 0 3px;
-}
-
+/* Info Buku (muncul saat hover) */
 .book-info {
     position: absolute;
-    bottom: -70px;
+    bottom: -60px;
     left: 0;
     right: 0;
     text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    color: #f5e6d3;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -221,7 +181,7 @@ body {
     right: 30px;
     width: 70px;
     height: 70px;
-    background: #F4D03F;
+    background: #c9a84c;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -235,7 +195,7 @@ body {
 
 .continue-btn:hover {
     transform: scale(1.1);
-    background: #F7DC6F;
+    background: #d4b85c;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
 }
 
@@ -348,22 +308,35 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
     .title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
     }
     
     .shelf {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 1.5rem 1rem 0 1rem;
+        min-height: auto;
         gap: 1rem;
-        padding: 2rem 1rem 1rem 1rem;
-        min-height: 300px;
     }
     
     .book {
-        width: 120px;
-        height: 200px;
+        width: 140px;
+        height: 220px;
     }
     
     .modal-content {
         max-height: 100vh;
         border-radius: 0;
     }
-}
+    
+    .continue-btn {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+    }
+    }
