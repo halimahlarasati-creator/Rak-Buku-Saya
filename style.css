@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 4px solid #5a3a25;
+    border-bottom: 3px solid #5a3a25;
 }
 
 .header-content { flex: 1; }
@@ -44,6 +44,11 @@ body {
     border-radius: 25px;
     cursor: pointer;
     font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .lang-btn.active {
@@ -54,9 +59,9 @@ body {
 
 /* CONTAINER */
 .bookshelf-container {
-    max-width: 100%;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 0;
+    padding: 1rem;
 }
 
 .shelf-row {
@@ -65,26 +70,28 @@ body {
     margin-bottom: 0;
 }
 
-/* RAK - KAYU TERANG */
+/* RAK - BACKGROUND KREM TERANG */
 .shelf {
     background: linear-gradient(180deg, 
-        #e8d5b7 0%, 
-        #f0e0c8 10%, 
-        #f5e8d4 50%, 
-        #f0e0c8 90%, 
-        #e0c9a8 100%);
-    padding: 30px 20px 0 20px;
-    min-height: 420px;
+        #f0e6d8 0%, 
+        #f5f0e8 20%, 
+        #faf6ee 50%, 
+        #f5f0e8 80%, 
+        #f0e6d8 100%);
+    padding: 40px 40px 0 40px;
+    min-height: 500px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
     justify-items: center;
     align-items: end;
     position: relative;
-    box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 
+        inset 0 5px 15px rgba(0, 0, 0, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* PAPAN RAK DI BAWAH */
+/* PAPAN RAK 3D DI BAWAH */
 .shelf::after {
     content: '';
     position: absolute;
@@ -93,33 +100,32 @@ body {
     right: -10px;
     height: 25px;
     background: linear-gradient(180deg, 
-        #c9a87c 0%, 
-        #b8956a 30%, 
-        #a67c52 70%, 
-        #8b6540 100%);
+        #d4c4a8 0%, 
+        #c9b896 40%, 
+        #b8a888 100%);
     border-radius: 0 0 5px 5px;
     box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.6),
-        inset 0 2px 3px rgba(255, 255, 255, 0.3);
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 2px 3px rgba(255, 255, 255, 0.4);
 }
 
-/* BUKU */
+/* BUKU - LEBIH BESAR */
 .book {
-    width: 200px;
-    height: 320px;
+    width: 260px;
+    height: 400px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     position: relative;
     margin-bottom: 20px;
     box-shadow: 
-        5px 5px 15px rgba(0, 0, 0, 0.5),
-        -2px 0 5px rgba(0, 0, 0, 0.2);
+        8px 8px 20px rgba(0, 0, 0, 0.4),
+        -3px 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .book:hover {
-    transform: translateY(-15px) scale(1.05);
+    transform: translateY(-20px) scale(1.05);
     box-shadow: 
-        10px 15px 30px rgba(0, 0, 0, 0.7);
+        15px 20px 35px rgba(0, 0, 0, 0.6);
     z-index: 10;
 }
 
@@ -128,16 +134,34 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
+    border-radius: 3px;
 }
 
+/* SPINE BUKU */
+.book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0.3) 0%, 
+        rgba(255,255,255,0.1) 50%, 
+        rgba(0,0,0,0.2) 100%);
+    border-radius: 3px 0 0 3px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* INFO BUKU */
 .book-info {
     position: absolute;
-    bottom: -55px;
+    bottom: -60px;
     left: 0;
     right: 0;
     text-align: center;
     color: #2c1810;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
@@ -146,13 +170,15 @@ body {
 .book:hover .book-info { opacity: 1; }
 
 .book-info h3 {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     margin-bottom: 0.3rem;
+    font-weight: 700;
 }
 
 .book-info p {
-    font-size: 0.8rem;
-    opacity: 0.9;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-style: italic;
 }
 
 /* TOMBOL LANJUT BACA */
@@ -162,7 +188,7 @@ body {
     right: 30px;
     width: 70px;
     height: 70px;
-    background: #c9a84c;
+    background: #d4b85c;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -171,11 +197,13 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 100;
+    transition: all 0.3s;
 }
 
 .continue-btn:hover {
-    transform: scale(1.1);
-    background: #d4b85c;
+    transform: scale(1.15);
+    background: #e0c86c;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
 }
 
 /* READER */
@@ -191,7 +219,7 @@ body {
 .reader.hidden { display: none; }
 
 .reader-header {
-    background: #8b7355;
+    background: linear-gradient(180deg, #8b7355 0%, #6b5340 100%);
     color: white;
     padding: 1rem 1.5rem;
     display: flex;
@@ -208,12 +236,19 @@ body {
     cursor: pointer;
     padding: 0.3rem 0.8rem;
     border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.back-btn:hover {
+    background: #d4af37;
+    color: #2c1810;
 }
 
 .reader-header h2 {
     flex: 1;
     margin: 0;
     color: #d4af37;
+    font-size: 1.3rem;
 }
 
 .reader-body {
@@ -227,11 +262,13 @@ body {
     margin: 0 auto;
     font-size: 1.1rem;
     line-height: 1.9;
+    color: #2c2c2c;
 }
 
 #reader-content h3 {
     text-align: center;
     margin: 2rem 0 1.5rem 0;
+    font-size: 1.5rem;
 }
 
 #reader-content p {
@@ -258,31 +295,66 @@ body {
     border-radius: 50%;
     font-size: 1.5rem;
     cursor: pointer;
+    transition: all 0.3s;
+}
+
+.page-nav:hover {
+    background: #d4af37;
+    color: #2c1810;
+}
+
+.page-nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 #page-slider {
     flex: 1;
     height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(90deg, #c9b896 0%, #8b7355 100%);
+    border-radius: 4px;
+    outline: none;
+}
+
+#page-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #d4af37;
+    cursor: pointer;
+    border: 2px solid #8b6914;
 }
 
 #page-indicator {
     font-weight: bold;
     min-width: 70px;
     text-align: center;
+    color: #2c1810;
 }
 
-/* MOBILE - 2 BUKU PER RAK */
+/* MOBILE - Tetap 2 buku tapi lebih kecil */
 @media (max-width: 768px) {
     .shelf {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 1.5rem;
         padding: 25px 15px 0 15px;
-        min-height: 340px;
+        min-height: 380px;
     }
     
     .book {
-        width: 140px;
-        height: 220px;
+        width: 150px;
+        height: 230px;
+    }
+    
+    .book-info h3 {
+        font-size: 0.9rem;
+    }
+    
+    .book-info p {
+        font-size: 0.75rem;
     }
     
     .header {
@@ -300,18 +372,5 @@ body {
         height: 60px;
         bottom: 20px;
         right: 20px;
-    }
-}
-
-/* TABLET - 3 BUKU */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .shelf {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .book {
-        width: 170px;
-        height: 270px;
     }
 }
